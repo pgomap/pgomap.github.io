@@ -1,32 +1,30 @@
 var home = [22.33319, 114.160886]; //SSP
 
-  alert(location.href);
 //query string
 if(location.href.indexOf("#")>0) {
   var qstr = location.href.split("#")[1].trim();
   var loc = qstr.split("l=")[1];
-  alert(loc);
   home =[loc.split(",")[0], loc.split(",")[1]];
 }
 
 var map = L.map('map').setView(home, 15);
 L.tileLayer(
-  'http://{s}.tile.osm.org/{z}/{x}/{y}.png', 
-  //'http://maps.wikimedia.org/osm-intl/{z}/{x}/{y}.png',
+  'https://{s}.tile.osm.org/{z}/{x}/{y}.png', 
+  //'https://maps.wikimedia.org/osm-intl/{z}/{x}/{y}.png',
   {maxZoom:18}).addTo(map);
 
 var theIcon = L.icon({
     iconUrl: 'https://img.icons8.com/color/50/000000/pokestop-blue.png',
-    iconSize:     [40,40], 
-    iconAnchor:   [20,45], 
-    popupAnchor:  [0,-30] 
+    iconSize: [40,40], 
+    iconAnchor: [20,45], 
+    popupAnchor: [0,-30] 
 });
 
-var x = 22.33319; var y = 114.160886; //SSP
+var x=22.33319; var y=114.160886; //SSP
 //var x=22.341358; var y=114.136661; //LCK
-var r = 0.01;
+var r=0.01;
 
-var query = "select A,B,C where ((A-" + x + ")*(A-" + x + ")+(B-" + y + ")*(B-" + y + "))<" + (r * r) + " limit 100";
+var query = "select A,B,C where ((A-"+x+")*(A-"+x+")+(B-"+y+")*(B-"+y+"))<"+(r*r)+" limit 100";
 query = encodeURIComponent(query);
 
 var base = "https://docs.google.com/spreadsheets/d/";
