@@ -46,12 +46,3 @@ L.marker([lat, lng], {icon: theIcon}).addTo(map).bindPopup("( "+idx+" )<hr><b>"+
 });
 
 
-
-/*
-https://img.icons8.com/color/50/000000/pokestop-blue.png
-https://img.icons8.com/color/50/000000/pokestop-violette.png
-
-https://img.icons8.com/color/50/000000/pokestop.png
-https://img.icons8.com/color/50/000000/pokestop-violette-cube.png
-*/
-
