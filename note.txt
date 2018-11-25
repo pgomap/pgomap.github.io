@@ -1,3 +1,5 @@
+resources:
+
 https://img.icons8.com/color/50/000000/pokestop-blue.png
 https://img.icons8.com/color/50/000000/pokestop-violette.png
 
@@ -5,5 +7,37 @@ https://img.icons8.com/color/50/000000/pokestop.png
 https://img.icons8.com/color/50/000000/pokestop-violette-cube.png
 
 
+==========================================================
+ideas:
 
+gps-to-address -> district
+kmb/pizzahut/hsbc district list
+go to map by district dropdown
 
+gsx as web backend, input handling
+
+fc login
+
+find friends
+trade this for that (at most 3, shiny/normal/legend)
+play raid at hotspot
+exchange within 10km zone
+
+feedback / suggestion
+report bug
+report missing gym
+report hot zone (nest)
+report not existing fc
+
+==========================================================
+
+funny/wrapping up:
+
+minify/obfruscate
+PNG/canvas encode/decode
+
+friendcode to QR (by js/gsx)
+
+android bot to test all fc's
+
+bot to read more TG/FB group
