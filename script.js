@@ -1,11 +1,17 @@
-var map = L.map('map').setView([22.33319, 114.160886], 15);
+var home = [22.33319, 114.160886]; //SSP
 
+//query string
+if(location.href.indexOf("#")>0) {
+	var qstr = location.href.split("#")[1].trim();
+  var loc = qstr.split("l=")[1];
+  home =[loc.split(",")[0], loc.split(",")[1]];
+}
+
+var map = L.map('map').setView(home, 15);
 L.tileLayer(
   'http://{s}.tile.osm.org/{z}/{x}/{y}.png', 
   //'http://maps.wikimedia.org/osm-intl/{z}/{x}/{y}.png',
-  {
-    maxZoom: 18
-  }).addTo(map);
+  {maxZoom:18}).addTo(map);
 
 var theIcon = L.icon({
     iconUrl: 'https://img.icons8.com/color/50/000000/pokestop-blue.png',
