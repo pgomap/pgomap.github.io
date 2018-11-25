@@ -1,9 +1,11 @@
 var home = [22.33319, 114.160886]; //SSP
 
+  alert(location.href);
 //query string
 if(location.href.indexOf("#")>0) {
-	var qstr = location.href.split("#")[1].trim();
+  var qstr = location.href.split("#")[1].trim();
   var loc = qstr.split("l=")[1];
+  alert(loc);
   home =[loc.split(",")[0], loc.split(",")[1]];
 }
 
