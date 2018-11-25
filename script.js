@@ -20,7 +20,7 @@ var theIcon = L.icon({
     popupAnchor: [0,-30] 
 });
 
-var x=22.33319; var y=114.160886; //SSP
+var x=home[0]; var y=home[1]; //SSP
 //var x=22.341358; var y=114.136661; //LCK
 var r=0.01;
 
