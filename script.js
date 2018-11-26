@@ -32,10 +32,10 @@ var sheetId = "15mDubG0SAB89kYZ_S9vqYUhFOUeHwTkLZ7MS9Y6zjOU";
 var gridId = "1042843836";
 var url = base + sheetId + "/gviz/tq?gid=" + gridId + "&tq=" + query + "&tqx=responseHandler:_";
 
-$.get(url, function(jsonp) {
-  var start = jsonp.indexOf("_(")+2;
-  var end = jsonp.lastIndexOf(")");
-  var json = jsonp.substring(start, end);
+$.get(url, function(json) {
+  //var start = jsonp.indexOf("_(")+2;
+  //var end = jsonp.lastIndexOf(")");
+  //var json = jsonp.substring(start, end);
   json = JSON.parse(json);
 
   $.each(json.table.rows, function(idx, cells) {
