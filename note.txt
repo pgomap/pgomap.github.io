@@ -6,6 +6,9 @@ https://img.icons8.com/color/50/000000/pokestop-violette.png
 https://img.icons8.com/color/50/000000/pokestop.png
 https://img.icons8.com/color/50/000000/pokestop-violette-cube.png
 
+shadows:
+http://static.tumblr.com/0zj4bj9/Wx4lno68q/pokemon_shadow.png
+http://rescuedesk.me/wp-content/uploads/pokemon-go-complete-002-silhouettes.jpg
 
 ==========================================================
 ideas:
