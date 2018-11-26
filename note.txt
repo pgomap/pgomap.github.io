@@ -29,6 +29,8 @@ report missing gym
 report hot zone (nest)
 report not existing fc
 
+pokdex, km-per-candy
+
 ==========================================================
 
 funny/wrapping up:
@@ -38,6 +40,6 @@ PNG/canvas encode/decode
 
 friendcode to QR (by js/gsx)
 
-android bot to test all fc's
+android bot to test all fc's, get trainer names
 
-bot to read more TG/FB group
+bot to read more info from TG/FB group
