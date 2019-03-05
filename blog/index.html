@@ -1,76 +1,384 @@
+
+<!doctype html>
 <html>
 <head>
-<title>pgomap</title>
-<script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?v=3&amp;sensor=false"></script>
-<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-<style type="text/css">
-<!--
-body {
-  margin: 0;
-  padding: 0;
-  font: 12px sans-serif;
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="shortcut icon" href="../favicon.ico">
+<link rel="apple-touch-icon" href="../apple-touch-icon.png">
+<link rel="stylesheet" type="text/css" charset="utf-8" href="../common.css">
+<link rel="stylesheet" type="text/css" charset="utf-8" href="blog.css">
+<script type="text/javascript" charset="utf-8" src="../common.js"></script>
+<script type="text/javascript" charset="utf-8" src="resource/mnist.js"></script>
+<script type="text/javascript">
+
+/**
+ * onloadハンドラ。
+ */
+onload = function() {
+
+    // プログラム表示。
+    document.getElementById('program1').innerText = program1;
 }
 
-h1,
-p {
-  margin: 0;
-  padding: 0;
+/**
+ * プログラム。
+ */
+function program1() {
+
+    var W = 14, H = 14;     // 画像サイズ。
+    var N = 6000;           // 学習データ数。
+    var ETA = 0.01;         // 学習率η（イータ）。
+    var NUM_TRAIN = 500;    // 学習回数。
+    var NUM_INPUT = W * H;  // 入力層のユニット数。
+    var NUM_HIDDEN = 50;    // 隠れ層のユニット数。
+    var NUM_OUTPUT = W * H; // 出力層のユニット数。
+
+    /**
+     * テストプログラムのmain()。
+     *
+     * 変数名凡例。
+     * n     : 学習データのindex。
+     * t     : 正解(教師)データ。
+     * x,z,y : 入力,隠れ,出力層の値。※x,y,zでないことに注意。
+     * i,j,k : 入力,隠れ,出力層のユニットindex。
+     * w1,w2 : 入力-隠れ,隠れ-出力層の重み。
+     */
+    (function main() {
+        document.getElementById('result1').innerText = '';
+
+        // 学習データ（入力、正解）と検証用データの作成。
+        var xlist = []; // 入力画像[N][14*14]
+        var tlist = []; // 正解数値[N][10]
+        for (var n = 0; n < N; ++n) {
+            xlist[n] = amul(TRAIN_PIXELS[n], 1 / 255); // pixel値を0～255→0～1に正規化。
+            tlist[n] = amul(TRAIN_PIXELS[n], 1 / 255); // pixel値を0～255→0～1に正規化。
+        }
+
+        // 重みを乱数で初期化。
+        var w1 = arand(NUM_HIDDEN, NUM_INPUT);  // w1[NUM_HIDDEN][NUM_INPUT]
+        var w2 = arand(NUM_OUTPUT, NUM_HIDDEN); // w2[NUM_OUTPUT][NUM_HIDDEN]
+        logcat('学習前の誤差 e=' + calcError(xlist, tlist, w1, w2) + '\n');
+
+        // 学習と認識を繰り返す。
+        (function trainAndRecognize(loop) {
+
+            // 学習データで学習。
+            for (var n = 0; n < N; ++n) {
+                train(xlist[n], tlist[n], w1, w2);
+            }
+
+            // 隠れ層の重み w1 を可視化。
+            var ctx1 = initCanvas('canvas1', 0.5);
+            for (var j = 0; j < NUM_HIDDEN; ++j) {
+                var x = (j % 10) * (W + 1);
+                var y = Math.floor(j / 10) * (H + 1);
+                drawW1j(ctx1, x, y, w1[j]);
+            }
+
+            // 学習データで認識して結果を可視化。
+            if (loop % 10 == 0) {
+                var ctx2 = initCanvas('canvas2', 0.5);
+                for (var n = 0; n < Math.min(N, 100); ++n) {
+                    var val = recognize(xlist[n], w1, w2);
+                    var x = (n % 10) * (W + 1);
+                    var y = Math.floor(n / 10) * (H + 1);
+                    drawOutput(ctx2, x, y, val.y);
+                }
+            }
+            logcat('学習' + loop + '回目の誤差 e=' + calcError(xlist, tlist, w1, w2) + '\n');
+
+            // 表示を反映するためsetTimeout()でyieldする。
+            if (loop < NUM_TRAIN) {
+                setTimeout(function() {trainAndRecognize(loop + 1);}, 1);
+            }
+        })(0);
+    })();
+
+    /**
+     * 学習。
+     * w1,w2を更新する。
+     * @return なし
+     */
+    function train(x, t, w1, w2) {
+
+        // (1)順伝播で出力x,y,zを計算
+        var val = recognize(x, w1, w2);
+
+        // (2)逆伝播で誤差を計算
+        var d1 = azero(NUM_OUTPUT); // 誤差δ（初期値0）
+        var d2 = azero(NUM_HIDDEN);
+        for (var k = 0; k < NUM_OUTPUT; ++k) { // 出力層：δ1=y-t
+            d1[k] = val.y[k] - t[k];
+        }
+        for (var j = 0; j < NUM_HIDDEN; ++j) { // 隠れ層：δ2=f'(z)Σw2･δ1
+            var temp = 0;
+            for (var k = 0; k < NUM_OUTPUT; ++k) {
+                temp += w2[k][j] * d1[k];
+            }
+            d2[j] = val.z[j] * (1 - val.z[j]) * temp; // sigmoid()の場合。
+            //d2[j] = (1 - val.z[j] * val.z[j]) * temp; // tanh()の場合。
+        }
+
+        // (3)重みの更新
+        for (var j = 0; j < NUM_HIDDEN; ++j) { // 入力層：w1 = w1 - ETA･δ2･x
+            for (var i = 0; i < NUM_INPUT; ++i) {
+                w1[j][i] -= ETA * d2[j] * x[i];
+            }
+        }
+        for (var k = 0; k < NUM_OUTPUT; ++k) { // 隠れ層：w2 = w2 - ETA･δ1･z
+            for (var j = 0; j < NUM_HIDDEN; ++j) {
+                w2[k][j] -= ETA * d1[k] * val.z[j];
+            }
+        }
+    }
+
+    /**
+     * 認識。
+     * 順伝播で出力値y,zを計算する。
+     * @return {y:[], z:[]}
+     */
+    function recognize(x, w1, w2) {
+        var z = azero(NUM_HIDDEN); // 隠れ層の値（初期値0）
+        var y = azero(NUM_OUTPUT); // 出力層の値（初期値0）
+
+        // 隠れ層の値を計算。z=f(Σw1･x)
+        for (var j = 0; j < NUM_HIDDEN; ++j) {
+            var a = 0;
+            for (var i = 0; i < NUM_INPUT; ++i) {
+                a += w1[j][i] * x[i];
+            }
+            z[j] = 1 / (1 + Math.exp(-a)); // sigmoid()の場合。
+            //z[j] = Math.tanh(a);           // tanh()の場合。
+        }
+
+        // 出力層の値を計算。y=Σw2･z
+        for (var k = 0; k < NUM_OUTPUT; ++k) {
+            for (var j = 0; j < NUM_HIDDEN; ++j) {
+                y[k] += w2[k][j] * z[j];
+            }
+        }
+        return {y:y, z:z};
+    }
+
+    /**
+     * 二乗誤差の和を計算。e=1/2Σ(y-t)^2
+     */
+    function calcError(xlist, tlist, w1, w2) { 
+        var error = 0;
+        for (var n = 0; n < N; ++n) {
+            var val = recognize(xlist[n], w1, w2);
+            for (var k = 0; k < NUM_OUTPUT; ++k) {
+                error += 0.5 * (val.y[k] - tlist[n][k]) * (val.y[k] - tlist[n][k]);
+            }
+        }
+        return error;
+    }
+
+    /**
+     * サブルーチン。
+     */
+    // 値0の配列生成。
+    function azero(len) {
+        var dst = [];
+        for (var i = 0; i < len; ++i) {
+            dst[i] = 0;
+        }
+        return dst;
+    }
+
+    // 乱数値(-1～1)の配列配列を生成。
+    function arand(N, I) {
+        var dst = [];
+        for (var n = 0; n < N; ++n) {
+            dst[n] = [];
+            for (var i = 0; i < I; ++i) {
+                dst[n][i] = Math.random() * 2 - 1;
+            }
+        }
+        return dst;
+    }
+
+    // 各要素値にnumを掛けた配列を生成。
+    function amul(src, num) {
+        var dst = [];
+        for (var i = 0; i < src.length; ++i) {
+            dst[i] = src[i] * num;
+        }
+        return dst;
+    }
+
+    // テキスト出力。
+    function logcat(str) {
+        document.getElementById('result1').innerText =
+            str + document.getElementById('result1').innerText;
+    }
+
+    // キャンバスの初期化。
+    function initCanvas(id, scale) {
+        var canvas = document.getElementById(id); // canvasとctxを準備する。
+        canvas.width = canvas.offsetWidth * scale; // 論理サイズを設定。
+        canvas.height = canvas.offsetHeight * scale;
+        return canvas.getContext('2d');
+    }
+
+    // 入力-隠れ層の重みを表示。
+    function drawW1j(ctx, x, y, w1j) {
+        var data = ctx.createImageData(W, H);
+        for (var i = 0; i < W * H; ++i) {
+            data.data[i * 4 + 0] =
+            data.data[i * 4 + 1] =
+            data.data[i * 4 + 2] = w1j[i] * 192 + 128; // 実際に試してみて見やすい値を設定。
+            data.data[i * 4 + 3] = 255;
+        }
+        ctx.putImageData(data, x, y);
+    }
+
+    // 出力を表示。
+    function drawOutput(ctx, x, y, w1j) {
+        var data = ctx.createImageData(W, H);
+        for (var i = 0; i < W * H; ++i) {
+            data.data[i * 4 + 0] =
+            data.data[i * 4 + 1] =
+            data.data[i * 4 + 2] = w1j[i] * 128 + 128; // 実際に試してみて見やすい値を設定。
+            data.data[i * 4 + 3] = 255;
+        }
+        ctx.putImageData(data, x, y);
+    }
 }
-//-->
-</style>
+</script>
+<title>AutoEncoderをJavaScriptで実装。</title>
 </head>
 <body>
-<div id="map_div" style="height: 400px;"></div>
 
-<script language="JavaScript">
-var map;
+<center>
+<!-- begin AdSense -->
+<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- FirstAd320x50 -->
+<ins class="adsbygoogle"
+     style="display:inline-block;width:320px;height:50px"
+     data-ad-client="ca-pub-8793979861765167"
+     data-ad-slot="8978834934"></ins>
+<script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+<!-- end AdSense -->
+</center>
 
-google.maps.event.addDomListener(window, "load", function() {
+<div class="content"><!-- begin content -->
 
-  var infoWindow = new google.maps.InfoWindow();
-  var mapOptions = {
-    center: new google.maps.LatLng(22.33319, 114.160886),
-    zoom: 13,
-    mapTypeId: google.maps.MapTypeId.ROADMAP
-  };
-  var map = new google.maps.Map(document.getElementById("map_div"), mapOptions);
+<div class="navi"><a href="../index.html">Home</a> | <a href="blog.html">Blog (Japanese)</a></div>
 
-  var x = 22.33319; var y = 114.160886; //SSP
-  //var x=22.341358; var y=114.136661; //LCK
-  var r = 0.01;
-  var query = "select A,B,C where ((A-"+x+")*(A-"+x+")+(B-"+y+")*(B-"+y+"))<"+(r*r)+" limit 100";
-  query = encodeURIComponent(query);
+<hr><!-- ----------------------------------------------------------------- -->
 
-  var base = "https://docs.google.com/spreadsheets/d/";
-  var sheetId = "15mDubG0SAB89kYZ_S9vqYUhFOUeHwTkLZ7MS9Y6zjOU";
-  var gridId = "1042843836";
-  var url = base + sheetId +"/gviz/tq?gid="+gridId +"&tq="+query+"&tqx=responseHandler:callback";
+<h2>AutoEncoderをJavaScriptで実装。</h2>
 
-  $.get(url, function(jsonp) {
-    var start = jsonp.indexOf("callback(");
-    var end = jsonp.lastIndexOf(")");
-    var json = jsonp.substring(start+9, end);
-    json = JSON.parse(json);
+<div>2015/4/12</div>
 
-    $.each(json.table.rows, function(idx, cells) {
+<p>
+<a href="20150412_mlp_ocr.html" target="_blank">前回</a>ようやく文字認識までたどりついた。今回はAutoEncoderをやってみる。
+</p>
 
-			var lat = cells.c[0].v;
-      var lng = cells.c[1].v;
-      var gnm = cells.c[2].v;
-      
-      var marker = new google.maps.Marker({
-        position: new google.maps.LatLng(lat,lng),
-        map: map
-      });
-      google.maps.event.addListener(marker, "click", function() {
-        infoWindow.setContent("( "+idx+" )<hr><b>"+gnm+"</b>");
-        infoWindow.open(map, this);
-      });
+<h3>プログラム。</h3>
 
-    });
-  });
+<p>
+今回も<a href="http://yann.lecun.com/exdb/mnist/" target="_blank">MNIST</a>の手書き文字データを利用して、入力と出力に14×14の画像を与え、隠れ層を50ユニットぐらいに絞って特徴抽出（次元圧縮）ができるか試してみる。
+</p>
 
-});
-</script>
+<pre class="source20" id="program1"></pre>
+
+<h3>学習結果。</h3>
+
+<p>
+「隠れ層の重み」枠は、まあこんなものか。学習文字数が N=500 だと（ネットで見かけるAutoEncoderの可視化画像のような）それらしい模様が出なかったが、N=6000に増やすと出てきた。<br>
+「出力層の値」枠にだんだん数字が浮かび上がってくる様子から、学習しているらしいことはわかる。
+</p>
+
+<p>
+<input class="execBtn" type="button" value="実行（処理は重い）" onclick="program1()">
+<div style="display:inline-block">
+  <div>隠れ層の重み</div>
+  <div class="border300"><canvas class="canvas300" id="canvas1"></canvas></div>
+</div>
+<div style="display:inline-block">
+  <div>出力層の値</div>
+  <div class="border300"><canvas class="canvas300" id="canvas2"></canvas></div>
+</div>
+</p>
+
+<pre class="source5" id="result1"></pre>
+
+<p>
+時間はかかったが28×28で実行してみた結果がこちら。隠れ層のなかには数字が浮かび上がっているようなものもある。
+</p>
+
+<p>
+<div style="display:inline-block">
+  <div>28×28実行時のスクリーンショット</div>
+  <img src="image/mlp_ae_28x28.png" style="width:100%;border:1px solid blue;">
+</div>
+</p>
+
+<h3>参考になったリンク。</h3>
+<ul>
+  <li>
+    <a href="http://kiyukuta.github.io/2013/08/20/hello_autoencoder.html"
+      target="_blank">Hello Autoencoder</a>
+    <div></div>
+  </li>
+</ul>
+
+<hr><!-- ----------------------------------------------------------------- -->
+
+<div class="social-buttons">
+  <!-- like -->
+  <div class="fb-like">
+    <div id="fb-root"></div>
+    <script>
+      (function(d, s, id) {
+        var js,fjs=d.getElementsByTagName(s)[0];if(d.getElementById(id))return;
+        js=d.createElement(s);js.id=id;
+        js.src="//connect.facebook.net/ja_JP/sdk.js#xfbml=1&version=v2.0";
+        fjs.parentNode.insertBefore(js, fjs);
+      } (document, 'script', 'facebook-jssdk'));
+    </script>
+    <div class="fb-like" id="likeInfo" data-href="" data-layout="button_count"
+      data-action="like" data-show-faces="true" data-share="false">
+    </div>
+    <script>document.getElementById('likeInfo').setAttribute('data-href',location.href);</script>
+  </div>
+  <!-- tweet -->
+  <div class="tw-tweet">
+    <a href="https://twitter.com/share" class="twitter-share-button" id="tweet-info"
+     data-url="" data-text="" data-count="horizontal" data-lang="ja">Tweet</a>
+    <script>
+      !function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],
+        p=/^http:/.test(d.location)?'http':'https';
+        if(!d.getElementById(id)){js=d.createElement(s);js.id=id;
+        js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}
+      }(document, 'script', 'twitter-wjs');
+      var e=document.getElementById('tweet-info');e.setAttribute('data-url', location.href);
+      e.setAttribute('data-text', document.getElementsByTagName('title')[0].textContent);
+    </script>
+  </div>
+</div>
+
+<hr><!-- ----------------------------------------------------------------- -->
+
+</div><!-- end content -->
+
+<center>
+<!-- begin AdSense -->
+<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- FirstAd300x250 -->
+<ins class="adsbygoogle"
+     style="display:inline-block;width:300px;height:250px"
+     data-ad-client="ca-pub-8793979861765167"
+     data-ad-slot="4548635331"></ins>
+<script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+<!-- end AdSense -->
+</center>
+
+<div class="credit">&copy;</div>
+
 </body>
 </html>
+
