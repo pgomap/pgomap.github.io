@@ -1,40 +1,40 @@
 
 /**
- * onloadハンドラ。
+ * onload handler
  */
 onload = function() {
 
-    // プログラム表示。
+    //show program1
     //document.getElementById('program1').innerText = program1;
 }
 
 /**
- * プログラム。
+ * program
  */
 function program1() {
 
-    var W = 14, H = 14;     // 画像サイズ。
-    var N = 6000;           // 学習データ数。
-    var ETA = 0.01;         // 学習率η（イータ）。
-    var NUM_TRAIN = 500;    // 学習回数。
-    var NUM_INPUT = W * H;  // 入力層のユニット数。
-    var NUM_HIDDEN = 50;    // 隠れ層のユニット数。
-    var NUM_OUTPUT = W * H; // 出力層のユニット数。
+    var W = 14, H = 14;     // image sizes
+    var N = 6000;           // num of training data
+    var ETA = 0.01;         // learning rate 
+    var NUM_TRAIN = 500;    // num of iterations
+    var NUM_INPUT = W * H;  // num units of input layer
+    var NUM_HIDDEN = 50;    // num units of hidden layer
+    var NUM_OUTPUT = W * H; // num units of output layer
 
     /**
      * テストプログラムのmain()。
      *
      * 変数名凡例。
-     * n     : 学習データのindex。
-     * t     : 正解(教師)データ。
-     * x,z,y : 入力,隠れ,出力層の値。※x,y,zでないことに注意。
-     * i,j,k : 入力,隠れ,出力層のユニットindex。
-     * w1,w2 : 入力-隠れ,隠れ-出力層の重み。
+     * n     : 学習DATAのindex。
+     * t     : 正解(教師) DATA
+     * x,z,y : 入力,隠れ,出力層の値。*x,y,zでないことに注意。
+     * i,j,k : index for units of input,hidden,output layer
+     * w1,w2 : weights for input-hidden, hidden-output layer
      */
     (function main() {
         document.getElementById('result1').innerText = '';
 
-        // 学習データ（入力、正解）と検証用データの作成。
+        // 学習DATA（入力、正解）と検証用DATAの作成。
         var xlist = []; // 入力画像[N][14*14]
         var tlist = []; // 正解数値[N][10]
         for (var n = 0; n < N; ++n) {
@@ -50,7 +50,7 @@ function program1() {
         // 学習と認識を繰り返す。
         (function trainAndRecognize(loop) {
 
-            // 学習データで学習。
+            // 学習DATAで学習。
             for (var n = 0; n < N; ++n) {
                 train(xlist[n], tlist[n], w1, w2);
             }
@@ -63,7 +63,7 @@ function program1() {
                 drawW1j(ctx1, x, y, w1[j]);
             }
 
-            // 学習データで認識して結果を可視化。
+            // 学習DATAで認識して結果を可視化。
             if (loop % 10 == 0) {
                 var ctx2 = initCanvas('canvas2', 0.5);
                 for (var n = 0; n < Math.min(N, 100); ++n) {
