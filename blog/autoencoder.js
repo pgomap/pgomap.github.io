@@ -13,36 +13,36 @@ function program1() {
      *
      * variable names example:
      * n     : index of training data
-     * t     : 正解(教師) DATA
-     * x,z,y : values of input,hidden,output layer *x,y,zでないことに注意。
+     * t     : correct answer data (teacher?)
+     * x,z,y : values of input,hidden,output layer (*order is important*)
      * i,j,k : index for units of input,hidden,output layer
-     * w1,w2 : weights for input-hidden, hidden-output layer
+     * w1,w2 : weights for input-to-hidden, hidden-to-output layer
      */
     (function main() {
         document.getElementById('result1').innerText = '';
 
-        // 学習DATA（入力、正解）と検証用DATAの作成。
+        // 学習DATA(入力、正解) & 検証用DATA の作成。
         var xlist = []; // 入力画像[N][14*14]
-        var tlist = []; // 正解数値[N][10]
+        var tlist = []; // 正解数値[N][10] (from 0 to 9)
         for (var n = 0; n < N; ++n) {
-            xlist[n] = amul(TRAIN_PIXELS[n], 1 / 255); // pixel値を0～255→0～1に正規化。
-            tlist[n] = amul(TRAIN_PIXELS[n], 1 / 255); // pixel値を0～255→0～1に正規化。
+            xlist[n] = amul(TRAIN_PIXELS[n], 1 / 255); // normalize pixel value 0~255->0~1
+            tlist[n] = amul(TRAIN_PIXELS[n], 1 / 255); // normalize pixel value 0~255->0~1
         }
 
-        // 重みを乱数で初期化。
+        // initializing weights with random values
         var w1 = arand(NUM_HIDDEN, NUM_INPUT);  // w1[NUM_HIDDEN][NUM_INPUT]
         var w2 = arand(NUM_OUTPUT, NUM_HIDDEN); // w2[NUM_OUTPUT][NUM_HIDDEN]
         logcat('Error before training: e=' + calcError(xlist, tlist, w1, w2) + '\n');
 
-        // 学習と認識を繰り返す。
+        // recursive training & recognizing
         (function trainAndRecognize(loop) {
 
-            // 学習DATAで学習。
+            // trains with training data
             for (var n = 0; n < N; ++n) {
                 train(xlist[n], tlist[n], w1, w2);
             }
 
-            // 隠れ層の重み w1 を可視化。
+            // visualize weight w1 in hidden layer
             var ctx1 = initCanvas('canvas1', 0.5);
             for (var j = 0; j < NUM_HIDDEN; ++j) {
                 var x = (j % 10) * (W + 1);
@@ -60,7 +60,7 @@ function program1() {
                     drawOutput(ctx2, x, y, val.y);
                 }
             }
-            logcat('Error of round' + loop + 'training: e=' + calcError(xlist, tlist, w1, w2) + '\n');
+            logcat('Error in training #' + loop + ': e=' + calcError(xlist, tlist, w1, w2) + '\n');
 
             // 表示を反映するためsetTimeout()でyieldする。
             if (loop < NUM_TRAIN) {
@@ -71,36 +71,37 @@ function program1() {
 
     /********************
      * TRAINING
-     * w1,w2を更新する。
+     * updates w1,w2
      * @return null
      */
     function train(x, t, w1, w2) {
 
-        // (1)順伝播で出力x,y,zを計算
+        // (1)calculate output x,y,z by forward propagation
+
         var val = recognize(x, w1, w2);
 
-        // (2)逆伝播で誤差を計算
-        var d1 = azero(NUM_OUTPUT); // 誤差δ（初期値0）
+        // (2)calculate error by back propagation
+        var d1 = azero(NUM_OUTPUT); //error δ (init to 0)
         var d2 = azero(NUM_HIDDEN);
-        for (var k = 0; k < NUM_OUTPUT; ++k) { // 出力層：δ1=y-t
+        for (var k = 0; k < NUM_OUTPUT; ++k) { //output layer: δ1=y-t
             d1[k] = val.y[k] - t[k];
         }
-        for (var j = 0; j < NUM_HIDDEN; ++j) { // 隠れ層：δ2=f'(z)Σw2･δ1
+        for (var j = 0; j < NUM_HIDDEN; ++j) { //hidden layer: δ2=f'(z)Σw2･δ1
             var temp = 0;
             for (var k = 0; k < NUM_OUTPUT; ++k) {
                 temp += w2[k][j] * d1[k];
             }
-            d2[j] = val.z[j] * (1 - val.z[j]) * temp; // sigmoid()の場合。
-            //d2[j] = (1 - val.z[j] * val.z[j]) * temp; // tanh()の場合。
+            d2[j] = val.z[j] * (1 - val.z[j]) * temp; // sigmoid() case
+            //d2[j] = (1 - val.z[j] * val.z[j]) * temp; // tanh() case
         }
 
-        // (3)重みの更新
-        for (var j = 0; j < NUM_HIDDEN; ++j) { // 入力層：w1 = w1 - ETA･δ2･x
+        // (3)update the weights
+        for (var j = 0; j < NUM_HIDDEN; ++j) { //input layer: w1 = w1 - ETA･δ2･x
             for (var i = 0; i < NUM_INPUT; ++i) {
                 w1[j][i] -= ETA * d2[j] * x[i];
             }
         }
-        for (var k = 0; k < NUM_OUTPUT; ++k) { // 隠れ層：w2 = w2 - ETA･δ1･z
+        for (var k = 0; k < NUM_OUTPUT; ++k) { //hidden layer: w2 = w2 - ETA･δ1･z
             for (var j = 0; j < NUM_HIDDEN; ++j) {
                 w2[k][j] -= ETA * d1[k] * val.z[j];
             }
@@ -109,14 +110,14 @@ function program1() {
 
     /*****************************
      * RECOGNITION
-     * 順伝播で出力値y,zを計算する。
+     * calculate output values y,z by forward propagation
      * @return {y:[], z:[]}
      */
     function recognize(x, w1, w2) {
-        var z = azero(NUM_HIDDEN); // 隠れ層の値（初期値0）
-        var y = azero(NUM_OUTPUT); // 出力層の値（初期値0）
+        var z = azero(NUM_HIDDEN); // hidden layer values (init to 0s)
+        var y = azero(NUM_OUTPUT); // output layer values (init to 0s)
 
-        // 隠れ層の値を計算。z=f(Σw1･x)
+        //calculate hidden layer values: z=f(Σw1･x)
         for (var j = 0; j < NUM_HIDDEN; ++j) {
             var a = 0;
             for (var i = 0; i < NUM_INPUT; ++i) {
@@ -126,7 +127,7 @@ function program1() {
             //z[j] = Math.tanh(a);           // tanh()の場合。
         }
 
-        // 出力層の値を計算。y=Σw2･z
+        //calculate output layer values: y=Σw2･z
         for (var k = 0; k < NUM_OUTPUT; ++k) {
             for (var j = 0; j < NUM_HIDDEN; ++j) {
                 y[k] += w2[k][j] * z[j];
@@ -136,22 +137,22 @@ function program1() {
     }
 
     /**
-     * 二乗誤差の和を計算。e=1/2Σ(y-t)^2
+     * Compute the Error Sum of Squares(SSE): e=1/2Σ(y-t)^2
      */
     function calcError(xlist, tlist, w1, w2) { 
         var error = 0;
         for (var n = 0; n < N; ++n) {
             var val = recognize(xlist[n], w1, w2);
             for (var k = 0; k < NUM_OUTPUT; ++k) {
-                error += 0.5 * (val.y[k] - tlist[n][k]) * (val.y[k] - tlist[n][k]);
+                error += 0.5 * (val.y[k] - tlist[n][k]) * (val.y[k] - tlist[n][k]); // 1/2(y-t)^2
             }
         }
         return error;
     }
 
-    /*************************
+    /*******************************************
      * SUBROUTINE
-     *************************/
+     ******************************************/
     // returns zero-filled array
     function azero(len) {
         var dst = [];
