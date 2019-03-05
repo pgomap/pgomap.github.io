@@ -5,7 +5,7 @@
 onload = function() {
 
     // プログラム表示。
-    document.getElementById('program1').innerText = program1;
+    //document.getElementById('program1').innerText = program1;
 }
 
 /**
