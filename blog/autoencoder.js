@@ -1,16 +1,3 @@
-
-/**
- * onload handler
- */
-onload = function() {
-
-    //show program1
-    //document.getElementById('program1').innerText = program1;
-}
-
-/**
- * program
- */
 function program1() {
 
     var W = 14, H = 14;     // image sizes
@@ -22,12 +9,12 @@ function program1() {
     var NUM_OUTPUT = W * H; // num units of output layer
 
     /**
-     * テストプログラムのmain()。
+     * main() of test program
      *
-     * 変数名凡例。
-     * n     : 学習DATAのindex。
+     * variable names example:
+     * n     : index of training data
      * t     : 正解(教師) DATA
-     * x,z,y : 入力,隠れ,出力層の値。*x,y,zでないことに注意。
+     * x,z,y : values of input,hidden,output layer *x,y,zでないことに注意。
      * i,j,k : index for units of input,hidden,output layer
      * w1,w2 : weights for input-hidden, hidden-output layer
      */
@@ -45,7 +32,7 @@ function program1() {
         // 重みを乱数で初期化。
         var w1 = arand(NUM_HIDDEN, NUM_INPUT);  // w1[NUM_HIDDEN][NUM_INPUT]
         var w2 = arand(NUM_OUTPUT, NUM_HIDDEN); // w2[NUM_OUTPUT][NUM_HIDDEN]
-        logcat('学習前の誤差 e=' + calcError(xlist, tlist, w1, w2) + '\n');
+        logcat('Error before training: e=' + calcError(xlist, tlist, w1, w2) + '\n');
 
         // 学習と認識を繰り返す。
         (function trainAndRecognize(loop) {
@@ -73,7 +60,7 @@ function program1() {
                     drawOutput(ctx2, x, y, val.y);
                 }
             }
-            logcat('学習' + loop + '回目の誤差 e=' + calcError(xlist, tlist, w1, w2) + '\n');
+            logcat('Error of round' + loop + 'training: e=' + calcError(xlist, tlist, w1, w2) + '\n');
 
             // 表示を反映するためsetTimeout()でyieldする。
             if (loop < NUM_TRAIN) {
@@ -82,10 +69,10 @@ function program1() {
         })(0);
     })();
 
-    /**
-     * 学習。
+    /********************
+     * TRAINING
      * w1,w2を更新する。
-     * @return なし
+     * @return null
      */
     function train(x, t, w1, w2) {
 
@@ -120,8 +107,8 @@ function program1() {
         }
     }
 
-    /**
-     * 認識。
+    /*****************************
+     * RECOGNITION
      * 順伝播で出力値y,zを計算する。
      * @return {y:[], z:[]}
      */
@@ -162,10 +149,10 @@ function program1() {
         return error;
     }
 
-    /**
-     * サブルーチン。
-     */
-    // 値0の配列生成。
+    /*************************
+     * SUBROUTINE
+     *************************/
+    // returns zero-filled array
     function azero(len) {
         var dst = [];
         for (var i = 0; i < len; ++i) {
@@ -174,7 +161,7 @@ function program1() {
         return dst;
     }
 
-    // 乱数値(-1～1)の配列配列を生成。
+    // returns 2D array filled with random values (-1~1)
     function arand(N, I) {
         var dst = [];
         for (var n = 0; n < N; ++n) {
@@ -186,7 +173,7 @@ function program1() {
         return dst;
     }
 
-    // 各要素値にnumを掛けた配列を生成。
+    // scalar multiplication to an array
     function amul(src, num) {
         var dst = [];
         for (var i = 0; i < src.length; ++i) {
@@ -195,21 +182,21 @@ function program1() {
         return dst;
     }
 
-    // テキスト出力。
+    // output to textarea
     function logcat(str) {
         document.getElementById('result1').innerText =
             str + document.getElementById('result1').innerText;
     }
 
-    // キャンバスの初期化。
+    // canvas initialization
     function initCanvas(id, scale) {
-        var canvas = document.getElementById(id); // canvasとctxを準備する。
+        var canvas = document.getElementById(id); // prepare canvas context
         canvas.width = canvas.offsetWidth * scale; // 論理サイズを設定。
         canvas.height = canvas.offsetHeight * scale;
         return canvas.getContext('2d');
     }
 
-    // 入力-隠れ層の重みを表示。
+    // drawing weights in input-to-hidden layer to canvas
     function drawW1j(ctx, x, y, w1j) {
         var data = ctx.createImageData(W, H);
         for (var i = 0; i < W * H; ++i) {
@@ -221,7 +208,7 @@ function program1() {
         ctx.putImageData(data, x, y);
     }
 
-    // 出力を表示。
+    // drawing output to canvas
     function drawOutput(ctx, x, y, w1j) {
         var data = ctx.createImageData(W, H);
         for (var i = 0; i < W * H; ++i) {
@@ -233,3 +220,14 @@ function program1() {
         ctx.putImageData(data, x, y);
     }
 }
+
+
+/**
+ * onload handler
+ */
+onload = function() {
+
+    //show program1
+    //document.getElementById('program1').innerText = program1;
+}
+
