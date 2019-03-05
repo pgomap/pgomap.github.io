@@ -251,46 +251,13 @@ function program1() {
 </head>
 <body>
 
-<center>
-<!-- begin AdSense -->
-<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<!-- FirstAd320x50 -->
-<ins class="adsbygoogle"
-     style="display:inline-block;width:320px;height:50px"
-     data-ad-client="ca-pub-8793979861765167"
-     data-ad-slot="8978834934"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
-<!-- end AdSense -->
-</center>
-
 <div class="content"><!-- begin content -->
 
 <div class="navi"><a href="../index.html">Home</a> | <a href="blog.html">Blog (Japanese)</a></div>
 
 <hr><!-- ----------------------------------------------------------------- -->
 
-<h2>AutoEncoderをJavaScriptで実装。</h2>
-
-<div>2015/4/12</div>
-
-<p>
-<a href="20150412_mlp_ocr.html" target="_blank">前回</a>ようやく文字認識までたどりついた。今回はAutoEncoderをやってみる。
-</p>
-
-<h3>プログラム。</h3>
-
-<p>
-今回も<a href="http://yann.lecun.com/exdb/mnist/" target="_blank">MNIST</a>の手書き文字データを利用して、入力と出力に14×14の画像を与え、隠れ層を50ユニットぐらいに絞って特徴抽出（次元圧縮）ができるか試してみる。
-</p>
-
 <pre class="source20" id="program1"></pre>
-
-<h3>学習結果。</h3>
-
-<p>
-「隠れ層の重み」枠は、まあこんなものか。学習文字数が N=500 だと（ネットで見かけるAutoEncoderの可視化画像のような）それらしい模様が出なかったが、N=6000に増やすと出てきた。<br>
-「出力層の値」枠にだんだん数字が浮かび上がってくる様子から、学習しているらしいことはわかる。
-</p>
 
 <p>
 <input class="execBtn" type="button" value="実行（処理は重い）" onclick="program1()">
