@@ -1,6 +1,12 @@
 /* inisde MNIST.js :
    TEST_LABLES[N]
    TEST_PIXELS[N][W*H]
+   
+      W1  W2 
+   (X)\   /(Y)
+   (X)-(Z)-(Y)
+   (X)-(Z)-(Y)
+   (X)/   \(Y)  
 */
 function program1() {
 
@@ -25,9 +31,9 @@ function program1() {
     (function main() {
         document.getElementById('result1').innerText = '';
 
-        // 学習DATA(入力、正解) & 検証用DATA の作成。
-        var xlist = []; // 入力画像[N][14*14]
-        var tlist = []; // 正解数値[N][10] (from 0 to 9)
+        // creates training data(input & correct) and verification data
+        var xlist = []; // input_pixels[N][14*14]
+        var tlist = []; // recognized_values[N][10] (1,2,3..9,0)
         for (var n = 0; n < N; ++n) {
             xlist[n] = amul(TRAIN_PIXELS[n], 1 / 255); // normalize pixel value 0~255->0~1
             tlist[n] = amul(TRAIN_PIXELS[n], 1 / 255); // normalize pixel value 0~255->0~1
@@ -54,7 +60,7 @@ function program1() {
                 drawW1j(ctx1, x, y, w1[j]);
             }
 
-            // 学習DATAで認識して結果を可視化。
+            // recognize with training data and visualize the result
             if (loop % 10 == 0) {
                 var ctx2 = initCanvas('canvas2', 0.5);
                 for (var n = 0; n < Math.min(N, 100); ++n) {
@@ -81,7 +87,6 @@ function program1() {
     function train(x, t, w1, w2) {
 
         // (1)calculate output x,y,z by forward propagation
-
         var val = recognize(x, w1, w2);
 
         // (2)calculate error by back propagation
