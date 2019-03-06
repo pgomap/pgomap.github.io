@@ -1,3 +1,7 @@
+/* inisde MNIST.js :
+   TEST_LABLES[N]
+   TEST_PIXELS[N][W*H]
+*/
 function program1() {
 
     var W = 14, H = 14;     // image sizes
