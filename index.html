@@ -34,7 +34,7 @@
 var currUrl = window.location.href;
 var pos = currUrl.indexOf('#');
 if(pos > 0) {
-    var params = url.substring(pos+1).trim();
+    var params = currUrl.substring(pos+1).trim();
     params = params.split('/');
     document.getElementById('theVideo').src = 'https://player.twitch.tv/?channel='+ params[0] +'&muted=true';
     var td = document.getElementById('theTd');
