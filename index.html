@@ -9,6 +9,7 @@
     
 <iframe
     src="https://player.twitch.tv/?channel=xagamod&muted=true"
+    id="theVideo"
     height="100%"
     width="100%"
     frameborder="0"
@@ -20,7 +21,7 @@
     
 <iframe frameborder="0"
     scrolling="no"
-    id="chicktv01"
+    id="theChat"
     src="https://www.twitch.tv/embed/chicktv01/chat"
     height="100%"
     width="350">
@@ -28,5 +29,17 @@
 
     </td></tr></table>    
     
+<script language="JavaScript">
+<!--
+var url = window.location.href;
+var pos = url.indexOf('#');
+if(pos > 0) {
+    var params = url.substring(pos+1).trim();
+    params = params.split('/');
+    document.getElementById('theVideo').src = 'https://player.twitch.tv/?channel='+ params[0] +'&muted=true';
+}
+//-->
+</script>
+
 </body>
 </html>
