@@ -49,7 +49,7 @@ if(pos > 0) {
     }
     if(params.length >= 4) {
         td.innerHTML = "";
-        for(var i=0; i < aUrls.length; i++) {
+        for(var i=0; i < 4; i++) {
             var url = 'https://player.twitch.tv/?channel='+ params[i] +'&muted=true';
             td.innerHTML += "<iframe width='50%' height='50%' id='theVideo1' frameborder=0 scrolling=0 src='"+ url +"'></iframe>";
         }
