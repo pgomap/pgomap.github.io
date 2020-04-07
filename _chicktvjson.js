@@ -9,8 +9,8 @@ function jsonp(data) {
   var html = "<table border=1>";
   for(var i=0; i < json.length; i++) {
   	html += "<tr><td>"+ json[i].n 
-          +"</td><td>"+ json[i].h 
-          +"</td><td>"+ json[i].d +"</td></tr>";
+             +"</td><td>"+ json[i].h 
+             +"</td><td>"+ json[i].d +"</td></tr>";
   }
   html += "</table>";
 
