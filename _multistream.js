@@ -1,5 +1,6 @@
 var currUrl = window.location.href;
 var pos = currUrl.indexOf('#');
+
 if(pos > 0) {
     var params = currUrl.substring(pos+1).trim();
     params = params.split('/');
