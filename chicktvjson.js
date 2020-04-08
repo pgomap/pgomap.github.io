@@ -13,7 +13,6 @@ function jsonp(data) {
         var dtls = json[i].d;
 	html += site.charAt(0).toUpperCase() + '<br>';  
   }
-  alert(html);
   var navTd = document.getElementById('navTd');
   navTd.innerHTML += '<font color="white">'+ html +'</font>';	
 }
