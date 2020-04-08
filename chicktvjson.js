@@ -5,15 +5,17 @@ function jsonp(data) {
   data = data.feed.entry[0].gs$cell.$t;
   var json =eval(data);
   //var json = JSON.parse(data);  
-  var navTd = document.getElementById('navTd');
 	
+  var html = "";
   for(var i=0; i < json.length; i++) {
 	var name = json[i].n;
         var site = json[i].h;
         var dtls = json[i].d;
-	  
-	navTd.innerHTML += site.charAt(0) + '<br>';
+	html += site.charAt(0) + '<br>';  
   }
+  alert(html);
+  var navTd = document.getElementById('navTd');
+  navTd.innerHTML += html;	
 }
 
 var js = document.createElement('script');
