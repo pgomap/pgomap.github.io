@@ -14,7 +14,7 @@ function jsonp(data) {
 	html += site.charAt(0).toUpperCase() + '<br>';  
   }
   var navTd = document.getElementById('navTd');
-  navTd.innerHTML += '<font color="white">'+ html +'</font>';	
+  navTd.innerHTML += '<font face="Ariel" size="2" color="white">'+ html +'</font>';	
 }
 
 var js = document.createElement('script');
