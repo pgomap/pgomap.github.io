@@ -3,21 +3,16 @@ var url = "https://spreadsheets.google.com/feeds/cells/"+ gssKey +"/3/public/val
 
 function jsonp(data) {
   data = data.feed.entry[0].gs$cell.$t;
-	var json =eval(data);
-	//var json = JSON.parse(data);
+  var json =eval(data);
+  //var json = JSON.parse(data);
   
-  var html = "<table border=1>";
   for(var i=0; i < json.length; i++) {
-  	html += "<tr><td>"+ json[i].n 
-             +"</td><td>"+ json[i].h 
-             +"</td><td>"+ json[i].d +"</td></tr>";
+	var name = json[i].n;
+        var site = json[i].h;
+        var dtls = json[i].d;
+	  
+	  
   }
-  html += "</table>";
-
-  var div = document.createElement('div');
-	div.innerHTML = html;
-	//document.getElementsByTagName('body')[0].appendChild(div);
-
 }
 
 var js = document.createElement('script');
