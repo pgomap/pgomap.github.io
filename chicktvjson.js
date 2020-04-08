@@ -17,10 +17,12 @@ function jsonp(data) {
 	else if(site == "yt") url = 'https://www.youtube.com/watch?v='+ dtls;
 	else if(site == "fb") url = 'https://www.facebook.com/'+ dtls;
 	
-	html += ('<a title="'+ name +'" href="#" onClick="goto(\"'+ url +'\");">'+ site.charAt(0).toUpperCase() + '</a><br>');  
+	html += '<a title="'+ name +'" href="'+ url +'"><font face="Ariel" size="2" color="white"><b>'
+	      + site.charAt(0).toUpperCase() 
+	      + '</b></font></a><br>';  
   }
   var navTd = document.getElementById('navTd');
-  navTd.innerHTML += '<font face="Ariel" size="2" color="white"><b>'+ html +'</b></font>';	
+  navTd.innerHTML += ''+ html +'';	
 }
 
 var js = document.createElement('script');
@@ -28,6 +30,3 @@ var timestamp = Math.floor(Date.now() / 1000);
 js.src = url + "&ts=" + timestamp;
 document.getElementsByTagName('body')[0].appendChild(js);
 
-function goto(url) {
-   window.open(url);
-}
