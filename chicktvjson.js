@@ -11,11 +11,11 @@ function jsonp(data) {
 	var name = json[i].n;
         var site = json[i].h;
         var dtls = json[i].d;
-	html += site.charAt(0) + '<br>';  
+	html += site.charAt(0).toUpperCase() + '<br>';  
   }
   alert(html);
   var navTd = document.getElementById('navTd');
-  navTd.innerHTML += html;	
+  navTd.innerHTML += '<font color="white">'+ html +'</font>';	
 }
 
 var js = document.createElement('script');
