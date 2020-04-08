@@ -16,6 +16,7 @@ function jsonp(data) {
 	if(site == "tw")      url = 'https://www.twitch.tv/'+ dtls;
 	else if(site == "yt") url = 'https://www.youtube.com/watch?v='+ dtls;
 	else if(site == "fb") url = 'https://www.facebook.com/'+ dtls;
+	else 		      url = dtls;
 	
 	html += '<a title="'+ name +'" href="'+ url +'"><font face="Ariel" size="2" color="white"><b>'
 	      + site.charAt(0).toUpperCase() 
