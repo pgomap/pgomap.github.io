@@ -4,14 +4,15 @@ var url = "https://spreadsheets.google.com/feeds/cells/"+ gssKey +"/3/public/val
 function jsonp(data) {
   data = data.feed.entry[0].gs$cell.$t;
   var json =eval(data);
-  //var json = JSON.parse(data);
-  
+  //var json = JSON.parse(data);  
+  var navTd = document.getElementById('navTd');
+	
   for(var i=0; i < json.length; i++) {
 	var name = json[i].n;
         var site = json[i].h;
         var dtls = json[i].d;
 	  
-	  
+	navTd.innerHTML += site.charAt(0) + '<br>';
   }
 }
 
