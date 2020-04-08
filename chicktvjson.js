@@ -11,7 +11,13 @@ function jsonp(data) {
 	var name = json[i].n;
         var site = json[i].h;
         var dtls = json[i].d;
-	html += site.charAt(0).toUpperCase() + '<br>';  
+	  
+	var url = "";
+	if(site == "tw")      url = 'https://www.twitch.tv/'+ dtls;
+	else if(site == "yt") url = 'https://www.youtube.com/watch?v='+ dtls;
+	else if(site == "fb") url = 'https://www.facebook.com/'+ dtls;
+	
+	html += ('<a title="'+ name +'" href="'+ url +'">'+ site.charAt(0).toUpperCase() + '</a><br>');  
   }
   var navTd = document.getElementById('navTd');
   navTd.innerHTML += '<font face="Ariel" size="2" color="white"><b>'+ html +'</b></font>';	
