@@ -12,15 +12,28 @@ function jsonp(data) {
         var site = json[i].h;
         var dtls = json[i].d;
 	  
-	var url = "";
-	if(site == "tw")      url = 'https://www.twitch.tv/'+ dtls;
-	else if(site == "yt") url = 'https://www.youtube.com/watch?v='+ dtls;
-	else if(site == "fb") url = 'https://www.facebook.com/'+ dtls;
-	else 		      url = dtls;
+	var url = dtls;
+	if(site == "tw")        url = 'https://www.twitch.tv/'+ dtls;
+	else if(site == "yt")   url = 'https://www.youtube.com/watch?v='+ dtls;
+	else if(site == "fb")   url = 'https://www.facebook.com/'+ dtls;
+	else if(site == "okru") url = 'https://ok.ru/live/'+ dtls;
 	
-	html += '<a title="'+ name +'" href="'+ url +'"><font face="Ariel" size="2" color="white"><b>'
-	      + site.charAt(0).toUpperCase() 
-	      + '</b></font></a><br>';  
+	var img = "";
+	if(site == "tw")        img = twitchLogo;
+	else if(site == "yt")   img = youtubeLogo;
+	else if(site == "fb")   img = facebookLogo;
+	else if(site == "okru") img = okruLogo;
+	
+	if(img == "") {
+		html += '<a title="'+ name +'" href="'+ url +'" target="_new"><font face="Ariel" size="2" color="white"><b>'
+		      + site.charAt(0).toUpperCase() 
+		      + '</b></font></a><br>';  
+	}
+	else {
+		html += '<a title="'+ name +'" href="'+ url +'" target="_new">'
+		      + '<img border=0 src="'+ img +'">' 
+		      + '</a><br>';  
+	}
   }
   var navTd = document.getElementById('navTd');
   navTd.innerHTML += ''+ html +'';	
