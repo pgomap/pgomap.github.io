@@ -23,6 +23,7 @@ function jsonp(data) {
 	else if(site == "yt")   img = youtubeLogo;
 	else if(site == "fb")   img = facebookLogo;
 	else if(site == "okru") img = okruLogo;
+	else if(site == "m3u8") img = m3uLogo;
 	
 	if(img == "") {
 		html += '<a title="'+ name +'" href="'+ url +'" target="_new"><font face="Ariel" size="2" color="white"><b>'
