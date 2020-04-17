@@ -17,7 +17,9 @@ function jsonp(data) {
 	else if(site == "yt")   url = 'https://www.youtube.com/watch?v='+ dtls;
 	else if(site == "fb")   url = 'https://www.facebook.com/'+ dtls;
 	else if(site == "okru") url = 'https://ok.ru/live/'+ dtls;
-	
+	else if(site == "vk") url = 'https://vk.com/video_ext.php?'+ dtls;
+	else if(site == "fc2") url = 'https://live.fc2.com/'+ dtls;
+	  
 	var img = "";
 	if(site == "tw")        img = twitchLogo;
 	else if(site == "yt")   img = youtubeLogo;
