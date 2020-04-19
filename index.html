@@ -75,10 +75,10 @@ function rotateCW() {
         if(params.indexOf('/') > 0) {
             params = params.split('/');
             if(params.length > 1) {
-                var paramLast = params[params[params.length-1]];
-                params[params.length-1] = "___";
-                params = paramLast +"/"+ params.join('/');
-                params = params.split('/___').join('');
+                var param1st = params[0];
+                params[0] = "___";
+                params = params.join('/') +"/"+ param1st;
+                params = params.split('___/').join('');
                 url = url.substring(0, url.indexOf('#')) +'#'+ params;
                 location.href = url;
                 location.reload();
@@ -94,10 +94,10 @@ function rotateCCW() {
         if(params.indexOf('/') > 0) {
             params = params.split('/');
             if(params.length > 1) {
-                var param1st = params[0];
-                params[0] = "___";
-                params = params.join('/') +"/"+ param1st;
-                params = params.split('___/').join('');
+                var paramLast = params[params[params.length-1]];
+                params[params.length-1] = "___";
+                params = paramLast +"/"+ params.join('/');
+                params = params.split('/___').join('');
                 url = url.substring(0, url.indexOf('#')) +'#'+ params;
                 location.href = url;
                 location.reload();
