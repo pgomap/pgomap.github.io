@@ -35,7 +35,7 @@ function jsonp(data) {
 		      + '</b></font></a><br>';  
 	}
 	else {
-		html += '<a title="'+ name +'" href="'+ url +'" target="_new">'
+		html += '<a title="'+ name +'" href="'+ url +'" target="_blank">'
 		      + '<img border=0 width=16 src="'+ img +'">' 
 		      + '</a><br>';  
 	}
