@@ -33,9 +33,9 @@
     <br>
     <a href='https://pgomap.github.io/?#carrotsbesttoyou/foxato9290'><font face='Ariel' color='white'>雙</font></a>
     <br>
-    <a href='#'><font face='Ariel' color='white'>↻</font></a>
+    <a href='#' onClick="rotateCW();"><font face='Ariel' color='white'>↻</font></a>
     <br>
-    <a href='#'><font face='Ariel' color='white'>↺</font></a>
+    <a href='#' onClick="rotateCCW();"><font face='Ariel' color='white'>↺</font></a>
     <!--１２３ ↻ ↺-->
     
 </td><td id='theTd'>    
@@ -65,5 +65,30 @@
 <script type="text/javascript" src="base64pngs.js"></script>
 <script type="text/javascript" src="multistream.js"></script>
 <script type="text/javascript" src="chicktvjson.js"></script>
+ 
+<script language="JavaScript">
+<!--
+function rotateCW() {
+    var url = location.href;
+    if(url.indexOf('#') > 0) {
+        var params = url.substring(url.indexOf('#')+1);
+        if(params.indexOf('/') > 0) {
+            params = params.split();
+            if(params.length > 1) {
+                var param1st = params[0];
+                params[0] = "___";
+                params = params.join('/') +"/"+ param1st;
+                location.reload();
+            }
+        }
+    }
+}
+    
+function rotateCW() {
+    rotateCCW();
+}
+//-->
+</script>
+        
 </body>
 </html>
