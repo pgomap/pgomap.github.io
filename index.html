@@ -78,6 +78,9 @@ function rotateCW() {
                 var param1st = params[0];
                 params[0] = "___";
                 params = params.join('/') +"/"+ param1st;
+                params = params.split('___/').join('');
+                url = url.substring(0, url.indexOf('#')) +'#'+ params;
+                location.href = url;
                 location.reload();
             }
         }
