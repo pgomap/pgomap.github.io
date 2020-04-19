@@ -94,7 +94,7 @@ function rotateCCW() {
         if(params.indexOf('/') > 0) {
             params = params.split('/');
             if(params.length > 1) {
-                var paramLast = params[params[params.length-1]];
+                var paramLast = params[params.length-1];
                 params[params.length-1] = "___";
                 params = paramLast +"/"+ params.join('/');
                 params = params.split('/___').join('');
