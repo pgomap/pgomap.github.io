@@ -75,7 +75,7 @@ alert(url);
         var params = url.substring(url.indexOf('#')+1);
 alert(params);       
         if(params.indexOf('/') > 0) {
-            params = params.split();
+            params = params.split('/');
             if(params.length > 1) {
                 var param1st = params[0];
 alert(param1st);
@@ -93,7 +93,7 @@ alert(url);
 }
     
 function rotateCCW() {
-    rotateCCW();
+    rotateCW();
 }
 //-->
 </script>
