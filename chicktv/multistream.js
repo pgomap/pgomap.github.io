@@ -1,9 +1,6 @@
 var currUrl = window.location.href;
 var pos = currUrl.indexOf('#');
 
-if(currUrl == 'https://pgomap.github.io/chicktv')
-    location.href = 'https://pgomap.github.io/chicktv/'; //fix twitch embed ref
-
 if(pos > 0) {
     var params = currUrl.substring(pos+1).trim();
     params = params.split('/');
