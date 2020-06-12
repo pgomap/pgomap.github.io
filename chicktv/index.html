@@ -25,13 +25,13 @@
 
     <img id='spacer4' width=1 height=8 src="#">    
     
-    <a href='./?#foxato9290'><font face='Ariel' color='white'><b>１</b></font></a>
+    <a href='./?#foxato9290&parent=pgomap.github.io'><font face='Ariel' color='white'><b>１</b></font></a>
     <br>
-    <a href='./?#carrotsbesttoyou'><font face='Ariel' color='white'><b>２</b></font></a>
+    <a href='./?#carrotsbesttoyou&parent=pgomap.github.io'><font face='Ariel' color='white'><b>２</b></font></a>
     <br>
-    <a href='./?#foxato9290/carrotsbesttoyou'><font face='Ariel' color='white'><b>雙</b></font></a>
+    <a href='./?#foxato9290/carrotsbesttoyou&parent=pgomap.github.io'><font face='Ariel' color='white'><b>雙</b></font></a>
     <br>
-    <a href='./?#carrotsbesttoyou/foxato9290'><font face='Ariel' color='white'>雙</font></a>
+    <a href='./?#carrotsbesttoyou/foxato9290&parent=pgomap.github.io'><font face='Ariel' color='white'>雙</font></a>
     <br>
     <a href="JavaScript:rotateCW();"><font face='Ariel' color='white'>↻</font></a>
     <br>
@@ -79,7 +79,7 @@ function rotateCW() {
                 params[0] = "___";
                 params = params.join('/') +"/"+ param1st;
                 params = params.split('___/').join('');
-                url = url.substring(0, url.indexOf('#')) +'#'+ params;
+                url = url.substring(0, url.indexOf('#')) +'#'+ params = '&parent=pgomap.github.io';
                 location.href = url;
                 location.reload();
             }
@@ -98,7 +98,7 @@ function rotateCCW() {
                 params[params.length-1] = "___";
                 params = paramLast +"/"+ params.join('/');
                 params = params.split('/___').join('');
-                url = url.substring(0, url.indexOf('#')) +'#'+ params;
+                url = url.substring(0, url.indexOf('#')) +'#'+ params = '&parent=pgomap.github.io';
                 location.href = url;
                 location.reload();
             }
