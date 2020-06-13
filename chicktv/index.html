@@ -1,0 +1,116 @@
+<html>
+    <head>
+    <title>ChickTV</title>
+    <link rel="shortcut icon" type="image/x-icon" href="favicon.ico">
+    <style>a {text-decoration: none;} </style>    
+    <script language="JavaScript">
+    if(location.href == 'https://pgomap.github.io/chicktv')
+        location.href = 'https://pgomap.github.io/chicktv/?#fahoma4315'; //fix twitch embed ref err
+    </script>
+    </head>
+    <body style=" margin: 0px;padding: 0px;">
+    
+<table id='theTable' border=0 cellspacing=0 cellpadding=0 width="100%" height="100%">    
+<tr><td id='navTd' width='16' valign='top' bgcolor='black'>
+    
+    <img id='spacer1' width=1 height=8 src="#">    
+
+    <a href='https://www.twitch.tv/directory/following/live' target='_blank'><img border=0
+     id='twLogo' width=16 height=16 src='#'></a>
+
+    <img id='spacer2' width=1 height=8 src="#">    
+    
+    <a href='https://youtube.com' target='_blank'><img border=0 
+     id='ytLogo' width=16 height=16 src='#'></a>
+
+    <img id='spacer3' width=1 height=8 src="#">    
+        
+    <img id='fbLogo' width=16 height=16 src='#'>
+
+    <img id='spacer4' width=1 height=8 src="#">    
+    
+    <a href='/chicktv/?#fahoma4315'><font face='Ariel' color='white'><b>１</b></font></a>
+    <br>
+    <a href='/chicktv/?#carrotsbesttoyou'><font face='Ariel' color='white'><b>２</b></font></a>
+    <br>
+    <a href='/chicktv/?#fahoma4315/carrotsbesttoyou'><font face='Ariel' color='white'><b>雙</b></font></a>
+    <br>
+    <a href='/chicktv/?#carrotsbesttoyou/fahoma4315'><font face='Ariel' color='white'>雙</font></a>
+    <br>
+    <a href="JavaScript:rotateCW();"><font face='Ariel' color='white'>↻</font></a>
+    <br>
+    <a href="JavaScript:rotateCCW();"><font face='Ariel' color='white'>↺</font></a>
+    <!--１２３ ↻ ↺-->
+    
+</td><td id='theTd'>    
+    
+<iframe
+    src="https://player.twitch.tv/?channel=fahoma4315&parent=pgomap.github.io&muted=true"
+    id="theVideo"
+    height="100%"
+    width="100%"
+    frameborder="0"
+    scrolling="no"
+    allowfullscreen="true">
+</iframe>
+ 
+    </td><td width="350">
+    
+<iframe frameborder="0"
+    scrolling="no"
+    id="theChat"
+    src="https://www.twitch.tv/embed/chicktv01/chat?parent=pgomap.github.io"
+    height="100%"
+    width="350">
+</iframe>  
+
+    </td></tr></table>    
+    
+<script type="text/javascript" src="base64pngs.js"></script>
+<script type="text/javascript" src="multistream.js"></script>
+<script type="text/javascript" src="chicktvjson.js"></script>
+ 
+<script language="JavaScript">
+<!--
+function rotateCW() {
+    var url = location.href;
+    if(url.indexOf('#') > 0) {
+        var params = url.substring(url.indexOf('#')+1);
+        if(params.indexOf('/') > 0) {
+            params = params.split('/');
+            if(params.length > 1) {
+                var param1st = params[0];
+                params[0] = "___";
+                params = params.join('/') +"/"+ param1st;
+                params = params.split('___/').join('');
+                url = url.substring(0, url.indexOf('#')) +'#'+ params;
+                location.href = url;
+                location.reload();
+            }
+        }
+    }
+}
+    
+function rotateCCW() {
+    var url = location.href;
+    if(url.indexOf('#') > 0) {
+        var params = url.substring(url.indexOf('#')+1);
+        if(params.indexOf('/') > 0) {
+            params = params.split('/');
+            if(params.length > 1) {
+                var paramLast = params[params.length-1];
+                params[params.length-1] = "___";
+                params = paramLast +"/"+ params.join('/');
+                params = params.split('/___').join('');
+                url = url.substring(0, url.indexOf('#')) +'#'+ params;
+                location.href = url;
+                location.reload();
+            }
+        }
+    }
+}
+//-->
+</script>
+        
+</body>
+</html>
