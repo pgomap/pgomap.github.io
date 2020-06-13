@@ -4,7 +4,7 @@ var pos = currUrl.indexOf('#');
 if(pos > 0) {
     var params = currUrl.substring(pos+1).trim();
     params = params.split('/');
-    document.getElementById('theVideo').src = 'https://player.twitch.tv/?channel='+ params[0] +'&muted=true';
+    document.getElementById('theVideo').src = 'https://player.twitch.tv/?channel='+ params[0] +'&muted=true&parent=pgomap.github.io';
     var td = document.getElementById('theTd');
     
     if(params.length == 2) {
