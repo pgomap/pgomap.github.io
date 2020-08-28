@@ -69,9 +69,13 @@
 <script type="text/javascript" src="base64pngs.js"></script>
 <script type="text/javascript" src="multistream.js"></script>
 <script type="text/javascript" src="chicktvjson.js"></script>
- 
 <script language="JavaScript">
 <!--
+if(defaultVid!='') {
+	location.href = 'https://pgomap.github.io/chicktv/?#'+ defaultVid;
+	location.reload();
+}
+
 function rotateCW() {
     var url = location.href;
     if(url.indexOf('#') > 0) {
