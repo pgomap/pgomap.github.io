@@ -21,11 +21,29 @@ if(pos > 0) {
                      + "<iframe width='50%' height='35%' id='theVideo2' frameborder=0 scrolling=0 src='"+ url[1] +"'></iframe>"
                      + "<iframe width='50%' height='35%' id='theVideo3' frameborder=0 scrolling=0 src='"+ url[2] +"'></iframe>";
     }
-    if(params.length >= 4) {
+    if(params.length == 4) {
         td.innerHTML = "";
         for(var i=0; i < 4; i++) {
             var url = 'https://player.twitch.tv/?channel='+ params[i] +'&muted=true&parent=pgomap.github.io';
             td.innerHTML += "<iframe width='50%' height='50%' id='theVideo1' frameborder=0 scrolling=0 src='"+ url +"'></iframe>";
+        }
+    }
+    if(params.length >= 5 && params.length <= 9) {
+        td.innerHTML = "";
+        for(var i=0; i < 9; i++) {
+			var url = 'https://player.twitch.tv/?channel=chicktv01&muted=true&parent=pgomap.github.io';
+			if(i < params.length)
+				url = 'https://player.twitch.tv/?channel='+ params[i] +'&muted=true&parent=pgomap.github.io';
+            td.innerHTML += "<iframe width='33%' height='33%' id='theVideo1' frameborder=0 scrolling=0 src='"+ url +"'></iframe>";
+        }
+    }
+    if(params.length >= 10 && params.length <= 16) {
+        td.innerHTML = "";
+        for(var i=0; i < 16; i++) {
+			var url = 'https://player.twitch.tv/?channel=chicktv01&muted=true&parent=pgomap.github.io';
+			if(i < params.length)
+				url = 'https://player.twitch.tv/?channel='+ params[i] +'&muted=true&parent=pgomap.github.io';
+            td.innerHTML += "<iframe width='25%' height='25%' id='theVideo1' frameborder=0 scrolling=0 src='"+ url +"'></iframe>";
         }
     }
 }
