@@ -1,6 +1,5 @@
 var gssKey = "1yEw-LdD2ICz7SeEOgP8KwrBaN5lpNq3ZHy0BKuPur9Y";
 var url = "https://spreadsheets.google.com/feeds/cells/"+ gssKey +"/3/public/values?alt=json-in-script&callback=jsonp";
-var defaultVid = ''; //1st site in the list
 
 function jsonp(data) {
   data = data.feed.entry[0].gs$cell.$t;
@@ -13,7 +12,10 @@ function jsonp(data) {
         var site = json[i].h;
         var dtls = json[i].d;
 
-	if(defaultVid=='' && site=='tw') defaultVid = dtls;
+	if(location.href.indexOf('#')<0 && site=='tw') {
+		location.href = 'https://pgomap.github.io/chicktv/?#'+ dtls;
+		location.href.reload();
+	}
 	  
 	var url = dtls;
 	if(site == "tw")        url = 'https://www.twitch.tv/'+ dtls;
