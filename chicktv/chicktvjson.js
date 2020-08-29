@@ -33,8 +33,6 @@ function jsonp(data) {
 		count3 ++;
 	}
 
-
-
 	if(site=='tw') {
 		allLinks += ('/'+ dtls);
 	}
