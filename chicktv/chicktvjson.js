@@ -7,12 +7,18 @@ function jsonp(data) {
   //var json = JSON.parse(data);  
 	
   var html = "";
+  var allLinks = '';
+  
   for(var i=0; i < json.length; i++) {
 	var name = json[i].n;
         var site = json[i].h;
         var dtls = json[i].d;
 
-	if(location.href.indexOf('#')<0 && site=='tw') {
+	if(site=='tw') {
+		allLinks += ('/'+ dtls);
+	}
+
+	if(location.href.indexOf('#')<0 && site=='tw') { //load default channel
 		location.href = 'https://pgomap.github.io/chicktv/?#'+ dtls;
 		location.href.reload();
 	}
@@ -45,6 +51,9 @@ function jsonp(data) {
 		      + '</a><br>';  
 	}
   }
+  
+  document.getElementById('allLinks').href = '/chicktv/?#' + allLinks.substring(1);
+  
   var navTd = document.getElementById('navTd');
   navTd.innerHTML += ''+ html +'';	
 }
