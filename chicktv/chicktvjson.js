@@ -8,11 +8,32 @@ function jsonp(data) {
 	
   var html = "";
   var allLinks = '';
+ 
+  var link1 = '';
+  var link2 = '';
+  var link3 = '';
+  var count2 = 0; 
+  var count3 = 0;
   
   for(var i=0; i < json.length; i++) {
 	var name = json[i].n;
         var site = json[i].h;
         var dtls = json[i].d;
+
+
+	if(site=='tw' && link1=='') {
+		link1 += ('/'+ dtls);
+	}
+	if(site=='tw' && count2<3) {
+		link2 += ('/'+ dtls);
+		count2 ++;
+	}
+	if(site=='tw' && count3<4) {
+		link3 += ('/'+ dtls);
+		count3 ++;
+	}
+
+
 
 	if(site=='tw') {
 		allLinks += ('/'+ dtls);
@@ -52,6 +73,9 @@ function jsonp(data) {
 	}
   }
   
+  document.getElementById('link1').href = '/chicktv/?#' + link1.substring(1);
+  document.getElementById('link2').href = '/chicktv/?#' + link2.substring(1);
+  document.getElementById('link3').href = '/chicktv/?#' + link3.substring(1);
   document.getElementById('allLinks').href = '/chicktv/?#' + allLinks.substring(1);
   document.getElementById('allLinks2').href = 'https://multistre.am' + allLinks;
   
