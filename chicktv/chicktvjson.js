@@ -53,6 +53,7 @@ function jsonp(data) {
   }
   
   document.getElementById('allLinks').href = '/chicktv/?#' + allLinks.substring(1);
+  document.getElementById('allLinks2').href = 'https://multistre.am' + allLinks;
   
   var navTd = document.getElementById('navTd');
   navTd.innerHTML += ''+ html +'';	
