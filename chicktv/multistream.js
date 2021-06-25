@@ -37,7 +37,16 @@ if(pos > 0) {
             td.innerHTML += "<iframe width='33%' height='33%' id='theVideo1' frameborder=0 scrolling=0 src='"+ url +"'></iframe>";
         }
     }
-    if(params.length >= 10 && params.length <= 16) {
+    if(params.length >= 10 && params.length <= 12) {
+        td.innerHTML = "";
+        for(var i=0; i < 12; i++) {
+			var url = 'https://player.twitch.tv/?channel=chicktv01&muted=true&parent=pgomap.github.io';
+			if(i < params.length)
+				url = 'https://player.twitch.tv/?channel='+ params[i] +'&muted=true&parent=pgomap.github.io';
+            td.innerHTML += "<iframe width='25%' height='33%' id='theVideo1' frameborder=0 scrolling=0 src='"+ url +"'></iframe>";
+        }
+    }
+    if(params.length >= 13 && params.length <= 16) {
         td.innerHTML = "";
         for(var i=0; i < 16; i++) {
 			var url = 'https://player.twitch.tv/?channel=chicktv01&muted=true&parent=pgomap.github.io';
