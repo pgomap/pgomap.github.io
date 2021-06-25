@@ -33,8 +33,9 @@ function jsonp(data) {
 		count3 ++;
 	}
 
-	if(site=='tw') {
+	if(site=='tw' || site=='okru') {
 		allLinks += ('/'+ dtls);
+		if(site=='okru') allLinks += '_ok';
 	}
 
 	if(location.href.indexOf('#')<0 && site=='tw') { //load default channel
