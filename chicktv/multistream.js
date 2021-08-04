@@ -40,7 +40,19 @@ if(pos > 0) {
             td.innerHTML += "<iframe width='50%' height='50%' id='theVideo1' frameborder=0 scrolling=0 src='"+ url +"'></iframe>";
         }
     }
-    if(params.length >= 5 && params.length <= 9) {
+    if(params.length >= 5 && params.length <= 6) {
+        td.innerHTML = "";
+        for(var i=0; i < 6; i++) {
+			var url = 'https://helixmedia360.com/11-17/Settlers.Gate.html';
+			if(i < params.length) {
+			    url = 'https://player.twitch.tv/?channel='+ params[i] +'&muted=true&parent=pgomap.github.io';
+			    if(params[i].lastIndexOf('_ok') == params[i].length-3) 
+				url = 'https://ok.ru/videoembed/'+ params[i].substring(0,params[i].length-3);
+			}
+            td.innerHTML += "<iframe width='33%' height='50%' id='theVideo1' frameborder=0 scrolling=0 src='"+ url +"'></iframe>";
+        }
+    }
+    if(params.length >= 7 && params.length <= 9) {
         td.innerHTML = "";
         for(var i=0; i < 9; i++) {
 			var url = 'https://helixmedia360.com/11-17/Settlers.Gate.html';
