@@ -67,7 +67,7 @@ if(pos > 0) {
     if(params.length >= 13 && params.length <= 16) {
         td.innerHTML = "";
         for(var i=0; i < 16; i++) {
-			var url = 'https://player.twitch.tv/?channel=chicktv01&muted=true&parent=pgomap.github.io';
+			var url = 'https://helixmedia360.com/11-17/Settlers.Gate.html';
 			if(i < params.length) {
 			    url = 'https://player.twitch.tv/?channel='+ params[i] +'&muted=true&parent=pgomap.github.io';
 			    if(params[i].lastIndexOf('_ok') == params[i].length-3) 
@@ -79,7 +79,7 @@ if(pos > 0) {
     if(params.length >= 17) {
         td.innerHTML = "";
         for(var i=0; i < 25; i++) {
-			var url = 'https://player.twitch.tv/?channel=chicktv01&muted=true&parent=pgomap.github.io';
+			var url = 'https://helixmedia360.com/11-17/Settlers.Gate.html';
 			if(i < params.length) {
 			    url = 'https://player.twitch.tv/?channel='+ params[i] +'&muted=true&parent=pgomap.github.io';
 			    if(params[i].lastIndexOf('_ok') == params[i].length-3) 
