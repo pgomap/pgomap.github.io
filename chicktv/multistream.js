@@ -43,7 +43,7 @@ if(pos > 0) {
     if(params.length >= 5 && params.length <= 9) {
         td.innerHTML = "";
         for(var i=0; i < 9; i++) {
-			var url = 'https://player.twitch.tv/?channel=chicktv01&muted=true&parent=pgomap.github.io';
+			var url = 'https://helixmedia360.com/11-17/Settlers.Gate.html';
 			if(i < params.length) {
 			    url = 'https://player.twitch.tv/?channel='+ params[i] +'&muted=true&parent=pgomap.github.io';
 			    if(params[i].lastIndexOf('_ok') == params[i].length-3) 
@@ -55,7 +55,7 @@ if(pos > 0) {
     if(params.length >= 10 && params.length <= 12) {
         td.innerHTML = "";
         for(var i=0; i < 12; i++) {
-			var url = 'https://player.twitch.tv/?channel=chicktv01&muted=true&parent=pgomap.github.io';
+			var url = 'https://helixmedia360.com/11-17/Settlers.Gate.html';
 			if(i < params.length) {
 			    url = 'https://player.twitch.tv/?channel='+ params[i] +'&muted=true&parent=pgomap.github.io';
 			    if(params[i].lastIndexOf('_ok') == params[i].length-3) 
@@ -85,7 +85,7 @@ if(pos > 0) {
 			    if(params[i].lastIndexOf('_ok') == params[i].length-3) 
 				url = 'https://ok.ru/videoembed/'+ params[i].substring(0,params[i].length-3);
 			}
-            td.innerHTML += "<iframe width='25%' height='25%' id='theVideo1' frameborder=0 scrolling=0 src='"+ url +"'></iframe>";
+            td.innerHTML += "<iframe width='20%' height='20%' id='theVideo1' frameborder=0 scrolling=0 src='"+ url +"'></iframe>";
         }
     }
 }
