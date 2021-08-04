@@ -78,7 +78,7 @@ if(pos > 0) {
     }
     if(params.length >= 17) {
         td.innerHTML = "";
-        for(var i=0; i < 16; i++) {
+        for(var i=0; i < 25; i++) {
 			var url = 'https://player.twitch.tv/?channel=chicktv01&muted=true&parent=pgomap.github.io';
 			if(i < params.length) {
 			    url = 'https://player.twitch.tv/?channel='+ params[i] +'&muted=true&parent=pgomap.github.io';
