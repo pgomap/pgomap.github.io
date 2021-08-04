@@ -49,7 +49,7 @@ if(pos > 0) {
 			    if(params[i].lastIndexOf('_ok') == params[i].length-3) 
 				url = 'https://ok.ru/videoembed/'+ params[i].substring(0,params[i].length-3);
 			}
-            td.innerHTML += "<iframe width='33%' height='50%' id='theVideo1' frameborder=0 scrolling=0 src='"+ url +"'></iframe>";
+            td.innerHTML += "<iframe width='50%' height='33%' id='theVideo1' frameborder=0 scrolling=0 src='"+ url +"'></iframe>";
         }
     }
     if(params.length >= 7 && params.length <= 9) {
