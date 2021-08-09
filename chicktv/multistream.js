@@ -61,7 +61,7 @@ if(pos > 0) {
     if(params.length >= 5 && params.length <= 6) {
         td.innerHTML = "";
         for(var i=0; i < 6; i++) {
-			var url = 'https://helixmedia360.com/11-17/Settlers.Gate.html';
+			var url = 'blank.html';
 			if(i < params.length) {
 			    url = 'https://player.twitch.tv/?channel='+ params[i] +'&muted=true&parent=pgomap.github.io';
 			    if(params[i].lastIndexOf('_ok') == params[i].length-3) 
@@ -73,7 +73,7 @@ if(pos > 0) {
     if(params.length >= 7 && params.length <= 9) {
         td.innerHTML = "";
         for(var i=0; i < 9; i++) {
-			var url = 'https://helixmedia360.com/11-17/Settlers.Gate.html';
+			var url = 'blank.html';
 			if(i < params.length) {
 			    url = 'https://player.twitch.tv/?channel='+ params[i] +'&muted=true&parent=pgomap.github.io';
 			    if(params[i].lastIndexOf('_ok') == params[i].length-3) 
@@ -85,7 +85,7 @@ if(pos > 0) {
     if(params.length >= 10 && params.length <= 12) {
         td.innerHTML = "";
         for(var i=0; i < 12; i++) {
-			var url = 'https://helixmedia360.com/11-17/Settlers.Gate.html';
+			var url = 'blank.html';
 			if(i < params.length) {
 			    url = 'https://player.twitch.tv/?channel='+ params[i] +'&muted=true&parent=pgomap.github.io';
 			    if(params[i].lastIndexOf('_ok') == params[i].length-3) 
@@ -97,7 +97,7 @@ if(pos > 0) {
     if(params.length >= 13 && params.length <= 16) {
         td.innerHTML = "";
         for(var i=0; i < 16; i++) {
-			var url = 'https://helixmedia360.com/11-17/Settlers.Gate.html';
+			var url = 'blank.html';
 			if(i < params.length) {
 			    url = 'https://player.twitch.tv/?channel='+ params[i] +'&muted=true&parent=pgomap.github.io';
 			    if(params[i].lastIndexOf('_ok') == params[i].length-3) 
@@ -109,7 +109,7 @@ if(pos > 0) {
     if(params.length >= 17) {
         td.innerHTML = "";
         for(var i=0; i < 25; i++) {
-			var url = 'https://helixmedia360.com/11-17/Settlers.Gate.html';
+			var url = 'blank.html';
 			if(i < params.length) {
 			    url = 'https://player.twitch.tv/?channel='+ params[i] +'&muted=true&parent=pgomap.github.io';
 			    if(params[i].lastIndexOf('_ok') == params[i].length-3) 
