@@ -3,6 +3,24 @@ var pos = currUrl.indexOf('#');
 
 if(pos > 0) {
     var params = currUrl.substring(pos+1).trim();
+
+    if(params.indexOf('/') == 0) {
+        window.location.href = "https://pgomap.github.io/chicktv/?#" + params.substring(1);
+	self.reload();
+    }
+    else if(params.lastIndexOf('/') == params.length-1) {
+        window.location.href = "https://pgomap.github.io/chicktv/?#" + params.substring(0, params.length-2);
+	self.reload();
+    }
+    else if(params.indexOf('//') >= 0) {
+    	while(params.indexOf('//') >= 0) {
+            params = params.split('//').join('/').trmi();
+            window.location.href = "https://pgomap.github.io/chicktv/?#" + params;
+            self.reload();
+	}
+    }
+	
+	
     params = params.split('/');
     if(params[0].lastIndexOf('_ok') == params[0].length-3) 
         document.getElementById('theVideo').src = 'https://ok.ru/videoembed/'+ params[0].substring(0,params[0].length-3);
