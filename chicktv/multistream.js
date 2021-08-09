@@ -6,17 +6,17 @@ if(pos > 0) {
 
     if(params.indexOf('/') == 0) {
         window.location.href = "https://pgomap.github.io/chicktv/?#" + params.substring(1);
-	self.reload();
+	location.reload();
     }
     else if(params.lastIndexOf('/') == params.length-1) {
         window.location.href = "https://pgomap.github.io/chicktv/?#" + params.substring(0, params.length-2);
-	self.reload();
+	location.reload();
     }
     else if(params.indexOf('//') >= 0) {
     	while(params.indexOf('//') >= 0) {
             params = params.split('//').join('/').trmi();
             window.location.href = "https://pgomap.github.io/chicktv/?#" + params;
-            self.reload();
+            location.reload();
 	}
     }
 	
