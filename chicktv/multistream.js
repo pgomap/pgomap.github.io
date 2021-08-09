@@ -9,7 +9,7 @@ if(pos > 0) {
 	location.reload();
     }
     else if(params.lastIndexOf('/') == params.length-1) {
-        window.location.href = "https://pgomap.github.io/chicktv/?#" + params.substring(0, params.length-2);
+        window.location.href = "https://pgomap.github.io/chicktv/?#" + params.substring(0, params.length-1);
 	location.reload();
     }
     else if(params.indexOf('/'+'/') >= 0) {
