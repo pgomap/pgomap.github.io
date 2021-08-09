@@ -12,9 +12,9 @@ if(pos > 0) {
         window.location.href = "https://pgomap.github.io/chicktv/?#" + params.substring(0, params.length-2);
 	location.reload();
     }
-    else if(params.indexOf('//') >= 0) {
-    	while(params.indexOf('//') >= 0) {
-            params = params.split('//').join('/').trim();
+    else if(params.indexOf('/'+'/') >= 0) {
+    	while(params.indexOf('/'+'/') >= 0) {
+            params = params.split('/'+'/').join('/').trim();
             window.location.href = "https://pgomap.github.io/chicktv/?#" + params;
             location.reload();
 	}
