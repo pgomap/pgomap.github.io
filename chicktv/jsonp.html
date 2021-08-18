@@ -1,0 +1,46 @@
+<html>
+<head>
+<title>new json</title>
+</head>
+<body>
+
+
+<script language="JavaScript">
+var url = "https://live.sk-knower.com/skgamerversion_api.php?page=chicktv";
+url = 'https://json2jsonp.com/?url='+ encodeURIComponent(url) +'&callback=json';
+
+function json(data) {
+  //var json = JSON.parse(data);  
+  var json = eval(data);
+
+  var rst = "https://pgomap.github.io/chicktv/?#";
+  for(var i=0; i < data.channels.length; i++) {
+	  //setdefaul / displayname / platform / details
+	  
+	  var dpname = data.channels[i].displayname.trim();
+	  if(dpname.indexOf(":hide:") < 0) {
+		var platform = data.channels[i].platform.trim();
+		var details = data.channels[i].details.trim();
+		
+		//rst += dpname+"__|__"+platform +"__|__"+ details +"<br>";
+		if(platform == 'twitch')
+		   rst += details +'/';
+		else if(platform == 'okru')
+		   rst += details +'_ok/';
+	  }
+  }
+
+  //var elm = document.createElement('div');
+  //elm.innerHTML = '<p>'+rst+'</p>';
+  //document.getElementsByTagName('body')[0].appendChild(elm);
+  location.href = rst;
+}
+
+var js = document.createElement('script');
+var timestamp = Math.floor(Date.now() / 1000);
+js.src = url //+ "&ts=" + timestamp;
+document.getElementsByTagName('body')[0].appendChild(js);
+</script>
+
+</body>
+</html>
