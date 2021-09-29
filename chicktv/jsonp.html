@@ -36,9 +36,9 @@ function json(data) {
   location.href = rst;
 }
 
-var url = location.href;
-if(url.indexOf('#') > 0) {
-	var params = url.substring(url.indexOf('#')+1);
+var baseurl = location.href;
+if(baseurl.indexOf('#') > 0) {
+	var params = baseurl.substring(baseurl.indexOf('#')+1);
 	url = "https://live.sk-knower.com/skgamerversion_api.php?page="+ params;
 }
 
