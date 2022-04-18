@@ -4,8 +4,8 @@
 <style>
 body {font:16px sans-serif}
 canvas { border: 1px solid #E8E8E8; }
-td, th { border: 1px solid black; }
 table { border-collapse: collapse; }
+td, th { border: 1px solid black; }
 </style>
 </head>
 <body>
@@ -190,9 +190,9 @@ fetch(url)
   );
 function myItems(jsonString){
   var json = JSON.parse(jsonString);
-  var table = '<table><tr>'
-  json.table.cols.forEach(colonne => table += '<th>' + colonne.label + '</th>')
-  table += '</tr>'
+  var table = '<table>' //<tr>
+  //json.table.cols.forEach(colonne => table += '<th>' + colonne.label + '</th>')
+  //table += '</tr>'
   json.table.rows.forEach(ligne => {
     table += '<tr>'
     ligne.c.forEach(cellule => {
