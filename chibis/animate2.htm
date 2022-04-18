@@ -22,6 +22,7 @@ const width = 32; //chibi width
 const height = 32; //chibi height
 const scaledWidth = scale * width;
 const scaledHeight = scale * height;
+const U=0,D=1,L=2,R=3; //up,down,left,right
 
 const cycleLoop = [0, 1, 0, 2];
 let currentLoopIndex = 0;
@@ -33,11 +34,18 @@ var ctx = myCanvas.getContext("2d");
 
 //=================================================================
 const gif1px = 'data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==';
-var aryImg = new Array(10); //num of characters
-for(var i=0; i < aryImg.length; i++) {
-	aryImg[i] = new Image();
-	aryImg[i].src  = gif1px;
-	aryImg[i].onload = function() {init();};
+var chibis = new Array(10); //num of characters
+for(var i=0; i < chibis.length; i++) {
+	chibis[i] = {	"id": i, 
+					"pos": {"x":-1 , "y":-1}, 
+					"move": null,
+					"img": null
+				};
+	chibis[i].pos = randomPos(chibis[i]);
+	chibis[i].move = randomNewMove(chibis[i]);
+	chibis[i].img = new Image();
+	chibis[i].img.src  = gif1px;
+	chibis[i].img.onload = function() {init();};
 }
 
 function init() {
@@ -45,14 +53,39 @@ function init() {
 }
 
 function drawFrame(frameX, frameY, canvasX, canvasY) {
-	for(var i=0; i < aryImg.length; i++) {
-		ctx.drawImage(	aryImg[i],
-						frameX * width, frameY * height, 
+	for(var i=0; i < chibis.length; i++) {
+		if(isUseNewMove()) 
+			chibis[i].move = randomNewMove(chibis[i]);
+		ctx.drawImage(	chibis[i].img,
+						frameX * width, chibis[i].move * height, 
 						width, height,
-						//canvasX, canvasY, 
-						i*(32+3), 0,
+						chibis[i].pos.x, chibis[i].pos.y, 
 						scaledWidth, scaledHeight );
 	}
+}
+
+function randomPos(theChibi) {
+	var rnd = ((Math.round(Math.random()*10000))-1) % (myCanvas.width - width);
+	if(rnd < 0) rnd = 0;
+	theChibi.pos.x = rnd;
+	rnd = ((Math.round(Math.random()*10000))-1) % (myCanvas.height - height);
+	if(rnd < 0) rnd = 0;
+	theChibi.pos.y = rnd;
+	return (theChibi.pos);
+}
+
+function randomNewMove(theChibi) {
+	var rnd = ((Math.round(Math.random()*100))-1) % 4;
+	if(rnd < 0) rnd = 0;
+	theChibi.move = rnd;
+	return (theChibi.move);
+}
+
+function isUseNewMove() {
+	var rnd = ((Math.round(Math.random()*10000))-1) % 100;
+	if(rnd < 0) rnd = 0;
+	//75% chance keep current move
+	return (rnd < 75 ? false : true); 
 }
 
 var rndImgList = ",";
@@ -63,13 +96,13 @@ function randomImgId() {
 }
 
 function loadImage() {
-	for(var i=0; i < aryImg.length; i++) {
+	for(var i=0; i < chibis.length; i++) {
 		var rndImg = randomImgId();
 		while(rndImgList.indexOf(","+rndImg+",") >=0 ) {
 			rndImg = randomImgId();
 		}
 		rndImgList += (rndImg+",");
-		aryImg[i].src = "https://pgomap.github.io/chibis/chibi_"+ rndImg +".png";
+		chibis[i].img.src = "https://pgomap.github.io/chibis/chibi_"+ rndImg +".png";
 	}
 }
 loadImage();
@@ -144,6 +177,7 @@ function FpsCtrl(fps, callback) {
 }
 
 //====================================================
+//List of twitch chat user names
 var id = '1BrlwpJDJfINkfh_akFqs6XG6XrwEh0vp264QYGrcrmY';
 var gid = '0';
 var url = 'https://docs.google.com/spreadsheets/d/'+id+'/gviz/tq?tqx=out:json&tq&gid='+gid;
@@ -154,7 +188,7 @@ fetch(url)
   );
 function myItems(jsonString){
   var json = JSON.parse(jsonString);
-  var table = '<table border=1><tr>'
+  var table = '<table><tr>'
   json.table.cols.forEach(colonne => table += '<th>' + colonne.label + '</th>')
   table += '</tr>'
   json.table.rows.forEach(ligne => {
