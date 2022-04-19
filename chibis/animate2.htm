@@ -6,6 +6,7 @@ body {font:16px sans-serif}
 canvas { border: 1px solid #E8E8E8; }
 table { border-collapse: collapse; }
 td, th { border: 1px solid black; }
+name { color: white; text-shadow: 0 0 3px black; }
 </style>
 </head>
 <body>
@@ -24,7 +25,12 @@ const width = 32; //chibi width
 const height = 32; //chibi height
 const scaledWidth = scale * width;
 const scaledHeight = scale * height;
+const textHeight = 3;
 const U=0,D=1,L=2,R=3; //up,down,left,right
+
+var bg = new Image();
+bg.src = "https://pgomap.github.io/chibis/bg2.png";
+
 
 const cycleLoop = [0, 1, 0, 2];
 let currentLoopIndex = 0;
@@ -34,6 +40,9 @@ let currentDirection = 0;
 var pTime = 0, mTime = 0, x = 0;
 var ctx = myCanvas.getContext("2d");
 
+var twUsers = "0omkco0,17bb,25dielomo,420superman1,5gmud7,999569,a123b456mmaa,aesopt41532,alan_fyk,alancml,alex3141314,andy1347,annaeuue,arthur010525,asa60126,asdasd113322,ayatv1,ayers6,ben92828,benben_2022,berisa4102,bigoldstone,black9519,blackpaper,booburn1996,bottomsu";
+twUsers = twUsers.trim().split(",");
+
 //=================================================================
 const gif1px = 'data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==';
 var chibis = new Array(10); //num of characters
@@ -41,6 +50,8 @@ for(var i=0; i < chibis.length; i++) {
 	chibis[i] = {	"id": i, 
 					"pos": {"x":-1 , "y":-1}, 
 					"move": null,
+					"label": twUsers[i],
+					"msg": "",
 					"img": null
 				};
 	chibis[i].pos = randomPos(chibis[i]);
@@ -55,24 +66,52 @@ function init() {
 }
 
 function drawFrame(frameX, frameY, canvasX, canvasY) {
+	//draw background
+	ctx.drawImage(bg,0,0, myCanvas.width, myCanvas.height, 0,0, myCanvas.width, myCanvas.height);
+					
 	for(var i=0; i < chibis.length; i++) {
 		if(isUseNewMove()) 
 			chibis[i].move = randomNewMove(chibis[i]);
+		//draw chibi
 		ctx.drawImage(	chibis[i].img,
 						frameX * width, chibis[i].move * height, 
 						width, height,
 						chibis[i].pos.x, chibis[i].pos.y, 
 						scaledWidth, scaledHeight );
+		//draw label(name)
+		ctx.font = "10px  Comic Sans MS";
+		ctx.shadowColor = "black";
+		ctx.shadowBlur = 3;
+		ctx.fillStyle = "white";
+		var textOffset = (chibis[i].label.length>9 ? chibis[i].label.length*2 : 0);
+		textOffset = (chibis[i].label.length<5 ? -1*chibis[i].label.length : textOffset);
+		ctx.fillText(	chibis[i].label, 
+						chibis[i].pos.x - textOffset, //stay middle
+						chibis[i].pos.y - textHeight); //on top
 	}
 }
 
+function isOverlapped(theChibi) {
+	for(var i=0; i<theChibi.id && chibis.length; i++) {
+		if(	(chibis[i].pos.x <= theChibi.pos.x && theChibi.pos.x <= chibis[i].pos.x+width) &&
+			(chibis[i].pos.y <= theChibi.pos.y && theChibi.pos.y <= chibis[i].pos.y+width) )
+		return true;
+	}
+	return false;
+}
+
 function randomPos(theChibi) {
-	var rnd = ((Math.round(Math.random()*10000))-1) % (myCanvas.width - width);
-	if(rnd < 0) rnd = 0;
-	theChibi.pos.x = rnd;
-	rnd = ((Math.round(Math.random()*10000))-1) % (myCanvas.height - height);
-	if(rnd < 0) rnd = 0;
-	theChibi.pos.y = rnd;
+	var rnd = -1;
+	for(var i=0; i < 999; i++) { //prevent deadlock when over crowed
+		rnd = ((Math.round(Math.random()*10000))-1) % (myCanvas.width - width);
+		if(rnd < 0) rnd = 0;
+		theChibi.pos.x = rnd;
+		rnd = ((Math.round(Math.random()*10000))-1) % (myCanvas.height - height - textHeight);
+		if(rnd < 0) rnd = 0;
+		theChibi.pos.y = rnd;
+		if(!isOverlapped(theChibi))
+			break;
+	}
 	return (theChibi.pos);
 }
 
@@ -186,13 +225,11 @@ var url = 'https://docs.google.com/spreadsheets/d/'+id+'/gviz/tq?tqx=out:json&tq
 
 fetch(url)
   .then(response => response.text())
-  .then(data => document.getElementById("jsontbl").innerHTML=myItems(data.substring(47).slice(0, -2))  
+  .then(data => document.getElementById("jsontbl").innerHTML = myItemTable(data.substring(47).slice(0, -2))  
   );
-function myItems(jsonString){
+function myItemTable(jsonString){
   var json = JSON.parse(jsonString);
-  var table = '<table>' //<tr>
-  //json.table.cols.forEach(colonne => table += '<th>' + colonne.label + '</th>')
-  //table += '</tr>'
+  var table = '<table>';
   json.table.rows.forEach(ligne => {
     table += '<tr>'
     ligne.c.forEach(cellule => {
