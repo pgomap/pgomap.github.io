@@ -26,7 +26,7 @@ const height = 32; //chibi height
 const scaledWidth = scale * width;
 const scaledHeight = scale * height;
 const textHeight = 3;
-const U=0,D=1,L=2,R=3; //up,down,left,right
+const UP=3,DOWN=0,LEFT=1,RIGHT=2;
 
 var bg = new Image();
 bg.src = "https://pgomap.github.io/chibis/bg2.png";
@@ -72,12 +72,13 @@ function drawFrame(frameX, frameY, canvasX, canvasY) {
 	for(var i=0; i < chibis.length; i++) {
 		if(isUseNewMove()) 
 			chibis[i].move = randomNewMove(chibis[i]);
-		//draw chibi
+		//draw character
 		ctx.drawImage(	chibis[i].img,
 						frameX * width, chibis[i].move * height, 
 						width, height,
 						chibis[i].pos.x, chibis[i].pos.y, 
 						scaledWidth, scaledHeight );
+
 		//draw label(name)
 		ctx.font = "10px  Comic Sans MS";
 		ctx.shadowColor = "black";
@@ -88,6 +89,23 @@ function drawFrame(frameX, frameY, canvasX, canvasY) {
 		ctx.fillText(	chibis[i].label, 
 						chibis[i].pos.x - textOffset, //stay middle
 						chibis[i].pos.y - textHeight); //on top
+						
+		//update pos.x pos.y for next move
+		if(chibis[i].move == LEFT) {
+			chibis[i].pos.x -= ((width - width%3)/3);
+		}
+		else if(chibis[i].move == RIGHT) {
+			chibis[i].pos.x += ((width - width%3)/3);
+		}
+		else if(chibis[i].move == UP) {
+			chibis[i].pos.y -= ((height - height%3)/3);
+		}
+		else if(chibis[i].move == DOWN) {
+			chibis[i].pos.y += ((height - height%3)/3);
+		}
+		//update move set
+		if(isOutofbound(chibis[i]))
+			chibis[i].move = randomNewMove(chibis[i]);
 	}
 }
 
@@ -98,6 +116,14 @@ function isOverlapped(theChibi) {
 		return true;
 	}
 	return false;
+}
+
+function isOutofbound(theChibi) {
+	if(	(theChibi.pos.x >= 0 && theChibi.pos.x < myCanvas.width-width) &&
+		(theChibi.pos.y >= 0 && theChibi.pos.y < myCanvas.height-height) )
+		return true;
+	else 
+		return false;
 }
 
 function randomPos(theChibi) {
