@@ -8,11 +8,11 @@
 	function rmCh(idx) { //remove channel
 		var url = location.href;
 		var params = url.substring(url.indexOf('?#')+2);
-		while(params.indexOf('//')) params = params.trim().split('//').join('/');
+		while(params.indexOf('\/\/')) params = params.trim().split('\/\/').join('/');
 		params = params.split('/');
 		params[idx-1] = '';
 		params = params.join('/');
-		while(params.indexOf('//')) params = params.trim().split('//').join('/');
+		while(params.indexOf('\/\/')) params = params.trim().split('\/\/').join('/');
 		location.href = url.substring(0, url.indexOf('?#')+2) +'?#'+ params;
 	}
 	//-->
