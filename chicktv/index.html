@@ -4,8 +4,18 @@
     <link rel="shortcut icon" type="image/x-icon" href="favicon.ico">
     <style>a {text-decoration: none;} </style>    
     <script language="JavaScript">
-    //if(location.href == 'https://pgomap.github.io/chicktv')
-    //    location.href = 'https://pgomap.github.io/chicktv/?#fahoma4315'; //fix twitch embed ref err
+	<!--
+	function rmCh(idx) { //remove channel
+		var url = location.href;
+		var params = url.substring(url.indexOf('?#')+2);
+		while(params.indexOf('//')) params = params.trim().split('//').join('/');
+		params = params.split('/');
+		params[idx-1] = '';
+		params = params.join('/');
+		while(params.indexOf('//')) params = params.trim().split('//').join('/');
+		location.href = url.substring(0, url.indexOf('?#')+2) +'?#'+ params;
+	}
+	//-->
     </script>
     </head>
     <body style=" margin: 0px;padding: 0px;">
@@ -29,12 +39,6 @@
 
     <img id='spacer4' width=1 height=8 src="#">    
     
-    <a id='link1' href='/chicktv/?#fahoma4315'><font face='Ariel' color='white'><b>１</b></font></a>
-    <br>            
-    <a id='link2' href='/chicktv/?#carrotsbesttoyou'><font face='Ariel' color='white'><b>２</b></font></a>
-    <br>            
-    <a id='link3' href='/chicktv/?#carrotsbesttoyou'><font face='Ariel' color='white'><b>３</b></font></a>
-    <br>
     <a id='allLinks4' href='https://pgomap.github.io/chicktv/jsonp.html'><font face='Ariel' color='white'><b>全</b></font></a>
     <br>
     <a id='allLinks4' href='https://pgomap.github.io/chicktv/jsonp.html#whitewing918'><font face='Ariel' color='white'><b>全</b></font></a>
@@ -42,7 +46,57 @@
     <a href="JavaScript:rotateCW();"><font face='Ariel' color='white'>↻</font></a>
     <br>
     <a href="JavaScript:rotateCCW();"><font face='Ariel' color='white'>↺</font></a>
-    <!--１２３ ↻ ↺-->
+    <br>
+	<!-- １　２　３　４　５　６　７　８　９  ↻ ↺-->
+    <a id='link1' href='JavaScript:rmCh(1);'><font face='Ariel' color='white'><b>１</b></font></a>
+    <br>            
+    <a id='link2' href='JavaScript:rmCh(2);'><font face='Ariel' color='white'><b>２</b></font></a>
+    <br>            
+    <a id='link3' href='JavaScript:rmCh(3);'><font face='Ariel' color='white'><b>３</b></font></a>
+    <br>
+    <a id='link3' href='JavaScript:rmCh(4);'><font face='Ariel' color='white'><b>４</b></font></a>
+    <br>
+    <a id='link3' href='JavaScript:rmCh(5);'><font face='Ariel' color='white'><b>５</b></font></a>
+    <br>
+    <a id='link3' href='JavaScript:rmCh(6);'><font face='Ariel' color='white'><b>６</b></font></a>
+    <br>
+    <a id='link3' href='JavaScript:rmCh(7);'><font face='Ariel' color='white'><b>７</b></font></a>
+    <br>
+    <a id='link3' href='JavaScript:rmCh(8);'><font face='Ariel' color='white'><b>８</b></font></a>
+    <br>
+    <a id='link3' href='JavaScript:rmCh(9);'><font face='Ariel' color='white'><b>９</b></font></a>
+    <br>
+    <a id='link3' href='JavaScript:rmCh(10);'><font face='Ariel' color='white'><b>10</b></font></a>
+    <br>
+    <a id='link3' href='JavaScript:rmCh(11);'><font face='Ariel' color='white'><b>11</b></font></a>
+    <br>
+    <a id='link3' href='JavaScript:rmCh(12);'><font face='Ariel' color='white'><b>12</b></font></a>
+    <br>
+    <a id='link3' href='JavaScript:rmCh(13);'><font face='Ariel' color='white'><b>13</b></font></a>
+    <br>
+    <a id='link3' href='JavaScript:rmCh(14);'><font face='Ariel' color='white'><b>14</b></font></a>
+    <br>
+    <a id='link3' href='JavaScript:rmCh(15);'><font face='Ariel' color='white'><b>15</b></font></a>
+    <br>
+    <a id='link3' href='JavaScript:rmCh(16);'><font face='Ariel' color='white'><b>16</b></font></a>
+    <br>
+    <a id='link3' href='JavaScript:rmCh(17);'><font face='Ariel' color='white'><b>17</b></font></a>
+    <br>
+    <a id='link3' href='JavaScript:rmCh(18);'><font face='Ariel' color='white'><b>18</b></font></a>
+    <br>
+    <a id='link3' href='JavaScript:rmCh(19);'><font face='Ariel' color='white'><b>19</b></font></a>
+    <br>
+    <a id='link3' href='JavaScript:rmCh(20);'><font face='Ariel' color='white'><b>20</b></font></a>
+    <br>
+    <a id='link3' href='JavaScript:rmCh(21);'><font face='Ariel' color='white'><b>21</b></font></a>
+    <br>
+    <a id='link3' href='JavaScript:rmCh(22);'><font face='Ariel' color='white'><b>22</b></font></a>
+    <br>
+    <a id='link3' href='JavaScript:rmCh(23);'><font face='Ariel' color='white'><b>23</b></font></a>
+    <br>
+    <a id='link3' href='JavaScript:rmCh(24);'><font face='Ariel' color='white'><b>24</b></font></a>
+    <br>
+    <a id='link3' href='JavaScript:rmCh(25);'><font face='Ariel' color='white'><b>25</b></font></a>
     
 </td><td id='theTd'>    
     
