@@ -10,7 +10,7 @@
 		var params = url.substring(url.indexOf('?#')+2);
 		while(params.indexOf('\/\/')>=0) params = params.trim().split('\/\/').join('/');
 		params = params.split('/');
-		if(idx-1<params.length) params[idx-1] = '_';
+		if(idx-1<params.length) params[idx-1] = '~';
 		params = params.join('/');
 		while(params.indexOf('\/\/')>=0) params = params.trim().split('\/\/').join('/');
 		location.href = url.substring(0, url.indexOf('?#')) +'?#'+ params;
@@ -18,9 +18,7 @@
         function goTo() {
 		var url = location.href;
 		var params = url.substring(url.indexOf('?#')+2);
-		params = params.trim().split('\/_\/').join('/');
-		if(params.charAt(0)=='_') params = params.substring(1);
-		if(params.charAt(params.length-1)=='_') params = params.substring(0, params.length-1);
+		params = params.trim().split('~').join('');
 		while(params.indexOf('\/\/')>=0) params = params.trim().split('\/\/').join('/');
 		location.reload();
 	}
