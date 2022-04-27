@@ -10,10 +10,19 @@
 		var params = url.substring(url.indexOf('?#')+2);
 		while(params.indexOf('\/\/')>=0) params = params.trim().split('\/\/').join('/');
 		params = params.split('/');
-		if(idx-1<params.length) params[idx-1] = '';
+		if(idx-1<params.length) params[idx-1] = '_';
 		params = params.join('/');
 		while(params.indexOf('\/\/')>=0) params = params.trim().split('\/\/').join('/');
 		location.href = url.substring(0, url.indexOf('?#')) +'?#'+ params;
+	}
+        function goTo() {
+		var url = location.href;
+		var params = url.substring(url.indexOf('?#')+2);
+		params = params.trim().split('\/_\/').join('/');
+		if(params.charAt(0)=='_') params = params.substring(1);
+		if(params.charAt(params.length-1)=='_') params = params.substring(0, params.length-1);
+		while(params.indexOf('\/\/')>=0) params = params.trim().split('\/\/').join('/');
+		location.reload();
 	}
 	//-->
     </script>
@@ -49,7 +58,7 @@
     <br>
     <a href="JavaScript:rotateCCW();"><font face='Ariel' color='white'>↺</font></a>
     <br>
-    <a href="JavaScript:location.reload();"><font face='Ariel' color='white'>✓</font></a>
+    <a href="JavaScript:goTo();"><font face='Ariel' color='white'>✓</font></a>
     <br>
 	<!-- １　２　３　４　５　６　７　８　９  ↻ ↺ ✓-->
     <a id='link1' href='JavaScript:rmCh(1);'><font face='Ariel' color='white'><b>１</b></font></a>
