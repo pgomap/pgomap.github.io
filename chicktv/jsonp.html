@@ -10,13 +10,15 @@ var baseurl = location.href;
 if(baseurl.indexOf('#') < 0) { //mix both sources
 	var params = "alancml,whitewing918".split(',');
 	var url1 = "https://live.sk-knower.com/skgamerversion_api.php?page="+ params[0];
-	url1 = 'https://json2jsonp.com/?url='+ encodeURIComponent(url1) +'&callback=json1';
+	url1 = 'https://json2jsonp.com/?url='+ encodeURIComponent(url1) +'&callback=json_';
+	url1 += params[0].substring(0,3).toLowerCase();
 	var js1 = document.createElement('script');
 	js1.src = url1;
 	document.getElementsByTagName('body')[0].appendChild(js1);
 
 	var url2 = "https://live.sk-knower.com/skgamerversion_api.php?page="+ params[1];
-	url2 = 'https://json2jsonp.com/?url='+ encodeURIComponent(url2) +'&callback=json2';
+	url2 = 'https://json2jsonp.com/?url='+ encodeURIComponent(url2) +'&callback=json_';
+	url2 += params[1].substring(0,3).toLowerCase();
 	var js2 = document.createElement('script');
 	js2.src = url2;
 	document.getElementsByTagName('body')[0].appendChild(js2);
@@ -24,13 +26,15 @@ if(baseurl.indexOf('#') < 0) { //mix both sources
 }
 
 var data1 = ''; var data2 = '';
-function json1(data) {
+function json_ala(data) {
 	data1 = eval(data);
-	if(data2!='') doBoth();
+	if(is1paramMode) json(data);
+	else if(data2!='') doBoth();
 }
-function json2(data) {
+function json_whi(data) {
 	data2 = eval(data);
-	if(data1!='') doBoth();
+	if(is1paramMode) json(data);
+	else if(data1!='') doBoth();
 }
 function doBoth() {
 	var rst = "https://pgomap.github.io/chicktv/?#";
@@ -80,9 +84,6 @@ function doBoth() {
 
 //================================================================
 
-var url = "https://live.sk-knower.com/skgamerversion_api.php?page=alancml";
-url = 'https://json2jsonp.com/?url='+ encodeURIComponent(url) +'&callback=json';
-
 function json(data) {
   //var json = JSON.parse(data);  
   var json = eval(data);
@@ -110,11 +111,14 @@ function json(data) {
   location.href = rst;
 }
 
+var is1paramMode = false;
 if(baseurl.indexOf('#') > 0) {
 	var params = baseurl.substring(baseurl.indexOf('#')+1);
-	url = "https://live.sk-knower.com/skgamerversion_api.php?page="+ params;
-	url = 'https://json2jsonp.com/?url='+ encodeURIComponent(url) +'&callback=json';
+	var url = "https://live.sk-knower.com/skgamerversion_api.php?page="+ params;
+	url = 'https://json2jsonp.com/?url='+ encodeURIComponent(url) +'&callback=json_';
+	url += params.substring(0,3).toLowerCase();
 
+	is1paramMode = true;
 	var js = document.createElement('script');
 	var timestamp = Math.floor(Date.now() / 1000);
 	js.src = url //+ "&ts=" + timestamp;
