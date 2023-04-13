@@ -180,12 +180,13 @@ function rotateCCW() {
 }
 	
 //count how many ch's
+var numCh = -1;
 function hideLeftButtons() {
 	var url = location.href;
 	var params = url.substring(url.indexOf('?#')+2);
 	while(params.indexOf('\/\/')>=0) params = params.trim().split('\/\/').join('/');
 	params = params.split('/');
-	var numCh = params.length;
+	numCh = params.length;
 	for(var i=1; i <= 25; i++) {
 		if(i <= numCh) continue;
 		var strId = 'link'+ i;
@@ -194,9 +195,12 @@ function hideLeftButtons() {
 }
 hideLeftButtons();	
 
-//test
-document.getElementById('link4').innerHTML += "<br><font face='Ariel' color='white'><b>⎯</b></font>";
-
+//separator
+if(numCh>=13 && numCh<=16) {
+	document.getElementById('link4').innerHTML += "<br><font face='Ariel' color='white'><b>⎯</b></font>";
+	document.getElementById('link8').innerHTML += "<br><font face='Ariel' color='white'><b>⎯</b></font>";
+	document.getElementById('link12').innerHTML += "<br><font face='Ariel' color='white'><b>⎯</b></font>";
+}
 //-->
 </script>
         
