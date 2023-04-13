@@ -79,7 +79,13 @@ function doBoth() {
 	if(rst1.charAt(0)==';') rst1 = rst1.substring(1); 
 	if(rst1.charAt(rst1.length-1)==';') rst1 = rst1.substring(0,rst1.length-1); 
 
-	location.href = rst+rst1;
+	var tmp = '';
+	rst1 = rst1.split(';');
+	for(var i=0;i<rst1.length;i++)
+		tmp += '/'+rst1[i];
+	tmp = tmp.substring(1);
+	
+	location.href = rst + tmp;
 }
 
 //================================================================
