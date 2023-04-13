@@ -6,6 +6,80 @@
 
 
 <script language="JavaScript">
+var baseurl = location.href;
+if(baseurl.indexOf('#') < 0) { //mix both sources
+	var params = "alancml,whitewing918".split(',');
+	var url1 = "https://live.sk-knower.com/skgamerversion_api.php?page="+ params[0];
+	url1 = 'https://json2jsonp.com/?url='+ encodeURIComponent(url1) +'&callback=json1';
+	var js1 = document.createElement('script');
+	js1.src = url1;
+	document.getElementsByTagName('body')[0].appendChild(js1);
+
+	var url2 = "https://live.sk-knower.com/skgamerversion_api.php?page="+ params[1];
+	url2 = 'https://json2jsonp.com/?url='+ encodeURIComponent(url2) +'&callback=json2';
+	var js2 = document.createElement('script');
+	js2.src = url2;
+	document.getElementsByTagName('body')[0].appendChild(js2);
+
+}
+
+var data1 = ''; var data2 = '';
+function json1(data) {
+	data1 = eval(data);
+	if(data2!='') doBoth();
+}
+function json2(data) {
+	data2 = eval(data);
+	if(data1!='') doBoth();
+}
+function doBoth() {
+	var rst = "https://pgomap.github.io/chicktv/?#";
+	var rst1 = ''; var rst2 = '';
+	for(var i=0; i < data1.channels.length; i++) {	
+	  var dpname = data1.channels[i].displayname.trim();
+	  if(dpname.indexOf(":hide:") < 0) {
+		var platform = data1.channels[i].platform.trim();
+		var details = data1.channels[i].details.trim();
+		if(platform == 'twitch')
+		   rst1 += details +';';
+		else if(platform == 'okru')
+		   rst1 += details +'_ok;';
+	  }
+	}
+	for(var i=0; i < data2.channels.length; i++) {	
+	  var dpname = data2.channels[i].displayname.trim();
+	  if(dpname.indexOf(":hide:") < 0) {
+		var platform = data2.channels[i].platform.trim();
+		var details = data2.channels[i].details.trim();
+		if(platform == 'twitch')
+		   rst2 += details +';';
+		else if(platform == 'okru')
+		   rst2 += details +'_ok;';
+	  }
+	}
+	//todo: check if ch is online?
+	
+	rst2 = ';'+ rst2 +';';
+	rst2 = rst2.split(';;').join(';');
+	if(rst1.charAt(0)==';') rst1 = rst1.substring(1); 
+	if(rst1.charAt(rst1.length-1)==';') rst1 = rst1.substring(0,rst1.length-1); 
+	var ary = rst1.split(';');
+	for(var i=0; i < ary.length; i++) {
+		if(rst2.indexOf(';'+ary[i]+';') >= 0)
+			ary[i] = ';';
+	}
+	rst1 = ary.join(';');
+	rst1 = rst1 +';'+ rst2;
+	while(rst1.indexOf(';;')>=0)
+		rst1 = rst1.split(';;').join(';');
+	if(rst1.charAt(0)==';') rst1 = rst1.substring(1); 
+	if(rst1.charAt(rst1.length-1)==';') rst1 = rst1.substring(0,rst1.length-1); 
+
+	location.href = rst+rst1;
+}
+
+//================================================================
+
 var url = "https://live.sk-knower.com/skgamerversion_api.php?page=alancml";
 url = 'https://json2jsonp.com/?url='+ encodeURIComponent(url) +'&callback=json';
 
@@ -36,7 +110,6 @@ function json(data) {
   location.href = rst;
 }
 
-var baseurl = location.href;
 if(baseurl.indexOf('#') > 0) {
 	var params = baseurl.substring(baseurl.indexOf('#')+1);
 	url = "https://live.sk-knower.com/skgamerversion_api.php?page="+ params;
