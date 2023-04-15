@@ -68,8 +68,9 @@ function doBoth() {
 	if(rst1.charAt(0)==';') rst1 = rst1.substring(1); 
 	if(rst1.charAt(rst1.length-1)==';') rst1 = rst1.substring(0,rst1.length-1); 
 	var ary = rst1.split(';');
+	rst2 = rst2.toLowerCase();
 	for(var i=0; i < ary.length; i++) {
-		if(rst2.indexOf(';'+ary[i]+';') >= 0)
+		if(rst2.indexOf(';'+ary[i].toLowerCase()+';') >= 0)
 			ary[i] = ';';
 	}
 	rst1 = ary.join(';');
