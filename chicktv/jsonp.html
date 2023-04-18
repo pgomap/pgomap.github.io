@@ -122,8 +122,10 @@ var is1paramMode = false;
 if(baseurl.indexOf('#') > 0) {
 	var params = baseurl.substring(baseurl.indexOf('#')+1);
 	var url = "https://live.sk-knower.com/skgamerversion_api.php?page="+ params;
-	url = 'https://json2jsonp.com/?url='+ encodeURIComponent(url) +'&callback=json_';
-	url += params.substring(0,3).toLowerCase();
+	url = 'https://json2jsonp.com/?url='+ encodeURIComponent(url) +'&callback=json';
+	var str3 = params.substring(0,3).toLowerCase();
+	if(str3=='ala' || str3=='whi')
+		url += '_'+str3;
 
 	is1paramMode = true;
 	var js = document.createElement('script');
